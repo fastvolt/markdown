@@ -1,6 +1,6 @@
-# FastVolt Markdown 
+# Fastvolt Markdown - The Library
 
-Simple and Concise Markdown to HTML Converter for PHP.
+A Simple and Straight-forward Markdown to HTML Converter for PHP.
 
 # Usage
 
@@ -10,7 +10,7 @@ Simple and Concise Markdown to HTML Converter for PHP.
 
 use FastVolt\Helper\Markdown;
 
-$sample = " # Hello, World ";
+$sample = " ## Hello, World ";
 
 # init Markdown object
 $html = Markdown::new();
@@ -19,6 +19,47 @@ $html = Markdown::new();
 $html -> setContent( $sample );
 
 # convert data to markdown
-$html -> toHtml(); // <h1>Hello, World</h1>
+$html -> toHtml(); // <h2>Hello, World</h2>
 
 ```
+
+# Convert File Content
+
+Assuming we created a `sample.md` file in `resources` folder with the following markdown contents:
+
+>[x] file: sample.md
+
+```php sample.md
+
+# Topic
+## Sub-topic
+
+Hello from the west side
+```
+<br>
+
+>[x] file: index.php
+
+```php
+
+<?php
+
+use FastVolt\Helper\Markdown;
+
+$file = ' resources/sample.md ';
+
+$html = Markdown::init();
+
+$html -> setFile( $file );
+
+echo $html -> toHtml();
+
+// output: <h1>Topic</h1> <h2> Sub-topic</h2> <p>Hello from the west side</p>
+
+```
+
+
+# Requirements 
+> PHP 8.1
+> that's all 😇.
+
