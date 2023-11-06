@@ -27,7 +27,7 @@ $html -> toHtml(); // <h2>Hello, World</h2>
 
 Assuming we created a `sample.md` file in `resources` folder with the following markdown contents:
 
->[x] file: sample.md
+> file: sample.md
 
 ```php sample.md
 
@@ -38,7 +38,7 @@ Hello from the west side
 ```
 <br>
 
->[x] file: index.php
+> file: index.php
 
 ```php
 
@@ -60,6 +60,6 @@ echo $html -> toHtml();
 
 
 # Requirements 
-> PHP 8.1
-> that's all 😇.
+- PHP 8.1
+- that's all 😇.
 
