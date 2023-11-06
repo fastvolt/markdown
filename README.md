@@ -29,12 +29,12 @@ Assuming we created a `sample.md` file in `resources` folder with the following 
 
 > file: sample.md
 
-```php sample.md
+```md 
 
 # Topic
 ## Sub-topic
 
-Hello from the west side
+__Hello from the west side__
 ```
 <br>
 
@@ -54,7 +54,7 @@ $html -> setFile( $file );
 
 echo $html -> toHtml();
 
-// output: <h1>Topic</h1> <h2> Sub-topic</h2> <p>Hello from the west side</p>
+// output: <h1>Topic</h1> <h2> Sub-topic</h2> <i>Hello from the west side</i>
 
 ```
 
