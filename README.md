@@ -2,6 +2,9 @@
 
 A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
+[![PHP Composer](https://github.com/fastvolt/markdown/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/fastvolt/markdown/actions/workflows/php.yml) [![License](https://img.shields.io/badge/License-MIT-yellow)](#license) [![issues - markdown](https://img.shields.io/github/issues/fastvolt/markdown)](https://github.com/fastvolt/markdown/issues) [![fastvolt - markdown](https://img.shields.io/static/v1?label=fastvolt&message=markdown&color=yellow&logo=github)](https://github.com/fastvolt/markdown "Go to GitHub repo") ![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
+
+
 ## Usage
 
 ```php
@@ -64,5 +67,9 @@ echo $html -> toHtml();
 
 
 # Note
-FastVolt is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>
+FastVolt is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>.
 
+<hr>
+
+
+Released under [MIT](/LICENSE) by [@fastvolt](https://github.com/fastvolt).
