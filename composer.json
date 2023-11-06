@@ -1,0 +1,20 @@
+{
+    "name": "fastvolt/markdown",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "FastVolt\\Helper\\Markdown\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oladoyinbo Vincent",
+            "email": "oladoyinboadverts@gmail.com"
+        }
+    ],
+    "require": {
+        "amphp/file": "^3.0",
+        "php": "^8.1"
+    }
+}
