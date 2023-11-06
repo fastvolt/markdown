@@ -2,7 +2,7 @@
 
 A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
-# Usage
+## Usage
 
 ```php
 
@@ -23,7 +23,7 @@ $html -> toHtml(); // <h2>Hello, World</h2>
 
 ```
 
-# Convert Markdown File
+## Convert Markdown File
 
 Assuming we created a `sample.md` file in `resources` folder with the following markdown contents:
 
@@ -59,7 +59,7 @@ echo $html -> toHtml();
 ```
 
 
-# Requirements 
+## Requirements 
 - PHP 8.1
 - that's all 😇.
 
