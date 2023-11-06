@@ -27,18 +27,17 @@ $html -> toHtml(); // <h2>Hello, World</h2>
 
 Assuming we created a `sample.md` file in `/resources` folder with the following markdown contents:
 
-> file: resources/sample.md
+> **file:** resources/sample.md
 
 ```md 
 
 # Topic
 ## Sub-topic
-
-__Hello from the west side__
+**Author:** __vincent__
 ```
 <br>
 
-> file: index.php
+> **file:** index.php
 
 ```php
 
@@ -54,7 +53,7 @@ $html -> setFile( $file );
 
 echo $html -> toHtml();
 
-// output: <h1>Topic</h1> <h2> Sub-topic</h2> <i>Hello from the west side</i>
+// output: <h1>Topic</h1> <h2> Sub-topic</h2> <b>Author:</b> <i>vincent</i>
 
 ```
 
