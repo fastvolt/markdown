@@ -1,6 +1,6 @@
 # Fastvolt Markdown - The Library
 
-A Simple and Straight-forward Markdown to HTML Converter for PHP.
+A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
 # Usage
 
@@ -23,7 +23,7 @@ $html -> toHtml(); // <h2>Hello, World</h2>
 
 ```
 
-# Convert File Content
+# Convert Markdown File
 
 Assuming we created a `sample.md` file in `resources` folder with the following markdown contents:
 
@@ -62,4 +62,8 @@ echo $html -> toHtml();
 # Requirements 
 - PHP 8.1
 - that's all 😇.
+
+
+# Note
+FastVolt is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>
 
