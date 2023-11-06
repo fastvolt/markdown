@@ -25,9 +25,9 @@ $html -> toHtml(); // <h2>Hello, World</h2>
 
 ## Convert Markdown File
 
-Assuming we created a `sample.md` file in `resources` folder with the following markdown contents:
+Assuming we created a `sample.md` file in `/resources` folder with the following markdown contents:
 
-> file: sample.md
+> file: resources/sample.md
 
 ```md 
 
@@ -48,7 +48,7 @@ use FastVolt\Helper\Markdown;
 
 $file = ' resources/sample.md ';
 
-$html = Markdown::init();
+$html = Markdown::new();
 
 $html -> setFile( $file );
 
