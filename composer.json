@@ -1,5 +1,12 @@
 {
     "name": "fastvolt/markdown",
+    "description": "A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.",
+    "keywords": [
+        "markdown",
+        "markdown-to-html",
+        "markdown-parser",
+        "markdown-library"
+    ],
     "type": "library",
     "license": "MIT",
     "autoload": {
