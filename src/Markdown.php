@@ -132,6 +132,12 @@ class Markdown
      */
     private function read_file(string $filename): ?string
     {
+        if (!file_exists($filename)) {
+            if(! $opn = fopen($filename, 'r+')) {
+                return throw new \Exception('File Does Not Exist');
+            }
+        }
+
         return \Amp\File\read($filename);
     }
 
