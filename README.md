@@ -103,6 +103,7 @@ After above operation, you will get the following result:
 <h3>hello</h3>
 
 ```
+<br>
 
 
 ## Requirements 
@@ -111,7 +112,7 @@ After above operation, you will get the following result:
 
 
 ## Note
-FastVolt is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>.
+FastVolt's Markup Library is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>.
 
 <hr>
 
