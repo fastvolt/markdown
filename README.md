@@ -22,11 +22,11 @@ $html = Markdown::new();
 $html -> setContent( $sample );
 
 # convert data to markdown
-$html -> toHtml(); // <h2>Hello, World</h2>
+print $html -> toHtml(); // <h2>Hello, World</h2>
 
 ```
 
-## Convert Markdown File
+## Convert Markdown File to Html
 
 Assuming we created a `sample.md` file in `/resources` folder with the following markdown contents:
 
@@ -54,9 +54,43 @@ $html = Markdown::new();
 
 $html -> setFile( $file );
 
-echo $html -> toHtml();
+print $html -> toHtml();
 
 // output: <h1>Topic</h1> <h2> Sub-topic</h2> <b>Author:</b> <i>vincent</i>
+
+```
+
+
+# Convert Markdown File to Html File
+
+In order to achieve this, you need to create a folder to store the compiled markdown files.
+
+> ➡️ If we've already set up directories named `files` and `markdowns` with a file named `hello.md` in the `markdowns` directory, let's see how we can convert the `hello.md` markdown file into an HTML file. Afterward, we will save the resulting HTML output in a new file named `hello.html` in `files` directory:
+<br>
+
+> **file:** markdowns/hello.md
+
+```md
+### hello
+```
+<br>
+
+> **file:** index.php
+
+```php
+
+use FastVolt\Helper\Markdown;
+
+# convert md file to html file
+$markdown = Markdown::new() 
+  -> setFile(' files/hello.md ')
+  -> setCompileDir( 'pages/' )
+  -> toHtmlFile(); 
+
+# check if markdown compile to html successfully 
+if ($markdown) {
+   print ("compile successful");
+} 
 
 ```
 
