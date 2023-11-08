@@ -6,7 +6,7 @@ use FastVolt\Helper\Markdown;
 
 # convert md file to html file
 $markdown = Markdown::new() 
-  -> setFile(' files/hello.md ')
+  -> setFile( __DIR__ . '/files/hello.md' )
   -> setCompileDir( 'pages/' )
   -> toHtmlFile(); 
 
