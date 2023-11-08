@@ -65,7 +65,7 @@ print $html -> toHtml();
 
 In order to achieve this, you need to create a folder to store the compiled markdown files.
 
-> ➡️ If we've already set up directories named `files` and `markdowns` with a file named `hello.md` in the `markdowns` directory, let's see how we can convert the `hello.md` markdown file into an HTML file. Afterward, we will save the resulting HTML output in a new file named `hello.html` in `files` directory:
+> ➡️ If we've already set up directories named `pages` and `markdowns` with a file named `hello.md` in the `markdowns` directory, let's see how we can convert the `hello.md` markdown file into an HTML file. Afterward, we will save the resulting HTML output in a new file named `hello.html` in `pages` directory:
 <br>
 
 > **file:** markdowns/hello.md
@@ -83,14 +83,24 @@ use FastVolt\Helper\Markdown;
 
 # convert md file to html file
 $markdown = Markdown::new() 
-  -> setFile(' files/hello.md ')
+  -> setFile( __DIR__ . '/files/hello.md' )
   -> setCompileDir( 'pages/' )
-  -> toHtmlFile(); 
+  -> toHtmlFile( filename: 'hello' ); 
 
 # check if markdown compile to html successfully 
 if ($markdown) {
    print ("compile successful");
-} 
+}
+
+```
+
+After above operation, you will get the following result:
+
+> **file:** pages/hello.html
+
+```html
+
+<h3>hello</h3>
 
 ```
 
@@ -100,7 +110,7 @@ if ($markdown) {
 - that's all 😇.
 
 
-# Note
+## Note
 FastVolt is an extended/simplified version of <a href="https://github.com/erusev/parsedown">Erusev's ParseDown Library</a>.
 
 <hr>
