@@ -66,7 +66,7 @@ class ParseMarkdown
         'source',
     );
 
-    protected $textLevelElements = [
+    protected array $textLevelElements = [
         'a',
         'br',
         'bdo',
@@ -110,82 +110,6 @@ class ParseMarkdown
     ];
 
 
-    public function __construct(
-
-        protected bool $sanitize = true,
-        
-        protected bool $sanitize_markup = false
-
-    ) {
-        $this->breaksEnabled = '';
-        $this->safeMode = $sanitize;
-        $this->markupEscaped = $sanitize_markup;
-    }
-
-
-    /**
-     * Set Markup Contents
-     * 
-     * @param string $text
-     * 
-     * @return bool
-     */
-    public function text(string $text): string
-    {
-        # make sure no definitions are set
-        $this->DefinitionData = array();
-
-        # standardize line breaks
-        $text = str_replace(array("\r\n", "\r"), "\n", $text);
-
-        # remove surrounding line breaks
-        $text = trim($text, "\n");
-
-        # split text into lines
-        $lines = explode("\n", $text);
-
-        # iterate through lines to identify blocks
-        $markup = $this->lines($lines);
-
-        # trim line breaks
-        $markup = trim($markup, "\n");
-
-        return $markup;
-    }
-
-
-    # Setters
-    private function setBreaksEnabled($breaksEnabled): self
-    {
-        $this->breaksEnabled = $breaksEnabled;
-
-        return $this;
-    }
-
-
-    private function setMarkupEscaped($markupEscaped)
-    {
-        $this->markupEscaped = $markupEscaped;
-
-        return $this;
-    }
-
-
-    private function setUrlsLinked($urlsLinked)
-    {
-        $this->urlsLinked = $urlsLinked;
-
-        return $this;
-    }
-
-    protected $urlsLinked = true;
-
-    public function setSafeMode(bool $safeMode)
-    {
-        $this->safeMode = (bool) $safeMode;
-
-        return $this;
-    }
 
     protected array $safeLinksWhitelist = [
         'http://',
@@ -239,12 +163,95 @@ class ParseMarkdown
 
 
 
-    protected function lines(array $lines)
+    public function __construct(
+
+        protected bool $sanitize = true,
+
+    ) {
+        $this->breaksEnabled = '';
+        $this->safeMode = $sanitize;
+        $this->setBreaksEnabled = true;
+
+        if(true === $sanitize){
+            $this->setUrlsLinked = true;
+            $this->setMarkupEscaped = true;
+        }
+    }
+
+
+    /**
+     * Set Markup Contents
+     * 
+     * @param string $text
+     * 
+     * @return bool
+     */
+    public function markdown_text(string $text): string
+    {
+        # make sure no definitions are set
+        $this->DefinitionData = array();
+
+        # standardize line breaks
+        $text = str_replace(array("\r\n", "\r"), "\n", $text);
+
+        # remove surrounding line breaks
+        $text = trim($text, "\n");
+
+        # split text into lines
+        $lines = explode("\n", $text);
+
+        # iterate through lines to identify blocks
+        $markup = $this->lines($lines);
+
+        # trim line breaks
+        $markup = trim($markup, "\n");
+
+        return $markup;
+    }
+
+
+    # Setters
+    private function setBreaksEnabled(bool $breaksEnabled): self
+    {
+        $this->breaksEnabled = $breaksEnabled;
+
+        return $this;
+    }
+
+
+    private function setMarkupEscaped(bool $markupEscaped): self
+    {
+        $this->markupEscaped = $markupEscaped;
+
+        return $this;
+    }
+
+
+    private function setUrlsLinked(bool $urlsLinked): self
+    {
+        $this->urlsLinked = $urlsLinked;
+
+        return $this;
+    }
+
+    protected $urlsLinked = true;
+
+    private function setSafeMode(bool $safeMode)
+    {
+        $this->safeMode = (bool) $safeMode;
+
+        return $this;
+    }
+
+
+    protected function lines(array $lines): ?string
     {
         $CurrentBlock = null;
 
         foreach ($lines as $line) {
+
             if (chop($line) === '') {
+
                 if (isset($CurrentBlock)) {
                     $CurrentBlock['interrupted'] = true;
                 }
@@ -253,6 +260,7 @@ class ParseMarkdown
             }
 
             if (strpos($line, "\t") !== false) {
+
                 $parts = explode("\t", $line);
 
                 $line = $parts[0];
@@ -282,24 +290,24 @@ class ParseMarkdown
             # ~
 
             if (isset($CurrentBlock['continuable'])) {
+
                 $Block = $this->{'block' . $CurrentBlock['type'] . 'Continue'}($Line, $CurrentBlock);
 
                 if (isset($Block)) {
+
                     $CurrentBlock = $Block;
 
                     continue;
+
                 } else {
+
                     if ($this->isBlockCompletable($CurrentBlock['type'])) {
                         $CurrentBlock = $this->{'block' . $CurrentBlock['type'] . 'Complete'}($CurrentBlock);
                     }
                 }
             }
 
-            # ~
-
             $marker = $text[0];
-
-            # ~
 
             $blockTypes = $this->unmarkedBlockTypes;
 
@@ -309,8 +317,6 @@ class ParseMarkdown
                 }
             }
 
-            #
-            # ~
 
             foreach ($blockTypes as $blockType) {
                 $Block = $this->{'block' . $blockType}($Line, $CurrentBlock);
@@ -381,18 +387,18 @@ class ParseMarkdown
         return $markup;
     }
 
-    protected function isBlockContinuable(string $Type)
+    protected function isBlockContinuable(string $Type): bool
     {
         return method_exists($this, 'block' . $Type . 'Continue');
     }
 
-    protected function isBlockCompletable(string $Type)
+    protected function isBlockCompletable(string $Type): bool
     {
         return method_exists($this, 'block' . $Type . 'Complete');
     }
 
 
-    protected function blockCode(array $Line, ?array $Block = null)
+    protected function blockCode(array $Line, ?array $Block = null): ?array
     {
         if (isset($Block) and !isset($Block['type']) and !isset($Block['interrupted'])) {
            return null;
@@ -415,6 +421,8 @@ class ParseMarkdown
 
             return $Block;
         }
+
+        return null;
     }
 
     protected function blockCodeContinue(array $Line, array $Block)
@@ -478,7 +486,7 @@ class ParseMarkdown
         }
     }
 
-    protected function blockCommentContinue(array $Line, array $Block)
+    protected function blockCommentContinue(array $Line, array $Block): ?array
     {
         if (isset($Block['closed'])) {
            return null;
@@ -501,7 +509,7 @@ class ParseMarkdown
      * 
      * @return mixed
      */
-    protected function blockFencedCode(array $Line)
+    protected function blockFencedCode(array $Line): ?array
     {
         if (preg_match('/^[' . $Line['text'][0] . ']{3,}[ ]*([^`]+)?[ ]*$/', $Line['text'], $matches)) {
 
@@ -1567,10 +1575,11 @@ class ParseMarkdown
 
     function parse($text)
     {
-        $markup = $this->text($text);
+        $markup = $this->markdown_text($text);
 
         return $markup;
     }
+
 
     protected function sanitiseElement(array $Element)
     {
