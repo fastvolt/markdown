@@ -12,13 +12,18 @@ class Markdown
 
     private string $setFile;
 
-    private function __construct()
-    {}
+    private function __construct(
+
+        protected bool $sanitize = true,
+        
+        protected bool $sanitize_markup = false 
+
+    ){}
 
 
-    public static function new()
+    public static function new(bool $sanitize = true): self
     {
-        return new self();
+        return new self( $sanitize, false );
     }
 
 
