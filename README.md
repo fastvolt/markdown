@@ -59,9 +59,9 @@ print $html -> toHtml();
 // output: <h1>Topic</h1> <h2> Sub-topic</h2> <b>Author:</b> <i>vincent</i>
 
 ```
+<br>
 
-
-# Convert Markdown File to Html File
+## Convert Markdown File to Html File
 
 In order to achieve this, you need to create a folder to store the compiled markdown files.
 
