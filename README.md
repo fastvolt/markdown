@@ -84,7 +84,8 @@ In order to achieve this, you need to create a folder to store the compiled mark
 use FastVolt\Helper\Markdown;
 
 # convert md file to html file
-$markdown = Markdown::new() 
+$markdown = Markdown::new()
+
   # set markdown file to compile
   -> setFile( __DIR__ . '/files/hello.md' )
 
