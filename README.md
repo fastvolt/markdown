@@ -52,8 +52,10 @@ $file_directory = __DIR__ . '/assets/sample.md';
 
 $html = Markdown::new();
 
+ # set markdown file to compile
 $html -> setFile( $file );
 
+ # convert to html
 print $html -> toHtml();
 
 // output: <h1>Topic</h1> <h2> Sub-topic</h2> <b>Author:</b> <i>vincent</i>
@@ -85,8 +87,10 @@ use FastVolt\Helper\Markdown;
 $markdown = Markdown::new() 
   # set markdown file to compile
   -> setFile( __DIR__ . '/files/hello.md' )
+
   # set directory to store compiled html files 
   -> setCompileDir( __DIR__ . '/pages/' )
+
   # convert to html
   -> toHtmlFile( filename: 'hello' ); 
 
