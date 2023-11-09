@@ -74,10 +74,10 @@ print $html -> toHtml();
 
 In order to achieve this, you need to create a folder to store the compiled markdown files.
 
-> ➡️ If we've already set up directories named `pages` and `markdowns` with a file named `hello.md` in the `markdowns` directory, let's see how we can convert the `hello.md` markdown file into an HTML file. Afterward, we will save the resulting HTML output in a new file named `hello.html` in `pages` directory:
+> ➡️ If we've already set up directories named `pages` and `files` with a file named `hello.md` in the `files` directory, let's see how we can convert the `hello.md` markdown file into an HTML file. Afterward, we will save the resulting HTML output in a new file named `hello.html` in `pages` directory:
 <br>
 
-> **file:** markdowns/hello.md
+> **file:** files/hello.md
 
 ```md
 ### hello
