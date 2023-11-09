@@ -140,7 +140,7 @@ class Markdown
      */
     private function addHtmlExtension(string $file_name): ?string
     {
-        return str_ends_with($file_name, '.html')
+        return !str_ends_with($file_name, '.html')
             ? $file_name . '.html' 
             : $file_name;
     }

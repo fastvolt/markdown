@@ -28,9 +28,9 @@ print $html -> toHtml(); // <h2>Hello, World</h2>
 
 ## Convert Markdown File to Html
 
-Assuming we created a `sample.md` file in `/resources` folder with the following markdown contents:
+Assuming we created a `sample.md` file in `/assets` folder with the following markdown contents:
 
-> **file:** resources/sample.md
+> **file:** assets/sample.md
 
 ```md 
 
@@ -48,7 +48,7 @@ Assuming we created a `sample.md` file in `/resources` folder with the following
 
 use FastVolt\Helper\Markdown;
 
-$file = ' resources/sample.md ';
+$file_directory = __DIR__ . '/assets/sample.md';
 
 $html = Markdown::new();
 
@@ -83,8 +83,11 @@ use FastVolt\Helper\Markdown;
 
 # convert md file to html file
 $markdown = Markdown::new() 
+  # set markdown file to compile
   -> setFile( __DIR__ . '/files/hello.md' )
-  -> setCompileDir( 'pages/' )
+  # set directory to store compiled html files 
+  -> setCompileDir( __DIR__ . '/pages/' )
+  # convert
   -> toHtmlFile( filename: 'hello' ); 
 
 # check if markdown compile to html successfully 

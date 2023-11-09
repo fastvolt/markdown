@@ -1,5 +1,6 @@
 <?php
-use SebastianBergmann\Type\VoidType;
+
+declare(strict_types=1);
 
 require(__DIR__ . '/../vendor/autoload.php');
 
@@ -20,7 +21,7 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
       ->setFile(__DIR__ . '/files/hello.md')
       ->toHtml();
 
-    $this->assertSame('<h3>hello</h3>', $markdown);
+    $this->assertSame('<h1>hello 1</h1>', $markdown);
   }
 
 
@@ -32,10 +33,10 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
   public function testMdtoHtml(): void
   {
     $markdown = Markdown::new()
-      ->setContent(' ### hello ')
-      ->toHtml();
+      ->setContent(' # hello ')
+      ->toHtml(); // <h1>hello 1</h1>
 
-      $this->assertSame('<h3>hello</h3>', $markdown);
+      $this->assertSame('<h1>hello</h1>', $markdown);
   }
 
 
@@ -47,9 +48,9 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
   public function testMdFiletoHtmlFile(): void
   {
     $markdown = Markdown::new()
-      ->setFile( __DIR__ . '/files/hello.md' )
+      ->setFile( __DIR__ . '/files/hello-2.md' )
       ->setCompileDir( __DIR__ . '/pages/' )
-      ->toHtmlFile( 'mdfiletohtmlfile' );
+      ->toHtmlFile( file_name: 'hello-2.html' ); // <h2>hello 2</h2>
 
       $this->assertIsBool($markdown);
 
@@ -65,9 +66,9 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
   public function testMdContentToHtmlFile(): void
   {
     $markdown = Markdown::new()
-      ->setContent( '# hello' )
-      ->setCompileDir( '/pages' )
-      ->toHtmlFile( 'test1' );
+      ->setContent( '### hello 3' )
+      ->setCompileDir( __DIR__ . '/pages' )
+      ->toHtmlFile( file_name: 'hello-3.html' ); // <h3>hello 3</h3>
 
       $this->assertIsBool($markdown);
 
