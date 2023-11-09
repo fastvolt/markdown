@@ -87,7 +87,7 @@ $markdown = Markdown::new()
   -> setFile( __DIR__ . '/files/hello.md' )
   # set directory to store compiled html files 
   -> setCompileDir( __DIR__ . '/pages/' )
-  # convert
+  # convert to html
   -> toHtmlFile( filename: 'hello' ); 
 
 # check if markdown compile to html successfully 
