@@ -132,4 +132,4 @@ FastVolt's Markup Library is an extended/simplified version of <a href="https://
 <hr>
 
 
-Released under [MIT](/LICENSE) by [@fastvolt](https://github.com/fastvolt).
+Released under [MIT License](/LICENSE) by [@fastvolt](https://github.com/fastvolt).
