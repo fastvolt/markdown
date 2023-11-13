@@ -23,13 +23,13 @@ use FastVolt\Helper\Markdown;
 $sample = " ## Hello, World ";
 
 # init Markdown object
-$html = Markdown::new();
+$mkd = Markdown::new();
 
 # set markdown data to convert
-$html -> setContent( $sample );
+$mkd -> setContent( $sample );
 
 # convert data to markdown
-print $html -> toHtml(); // <h2>Hello, World</h2>
+print $mkd -> toHtml(); // <h2>Hello, World</h2>
 
 ```
 
@@ -57,13 +57,14 @@ use FastVolt\Helper\Markdown;
 
 $file_directory = __DIR__ . '/assets/sample.md';
 
-$html = Markdown::new();
+# init markdown object
+$mkd = Markdown::new();
 
- # set markdown file to compile
-$html -> setFile( $file_directory );
+ # set markdown file
+$mkd -> setFile( $file_directory );
 
  # convert to html
-print $html -> toHtml();
+print $mkd -> toHtml();
 
 // output: <h1>Topic</h1> <h2> Sub-topic</h2> <b>Author:</b> <i>vincent</i>
 
@@ -91,19 +92,19 @@ In order to achieve this, you need to create a folder to store the compiled mark
 use FastVolt\Helper\Markdown;
 
 # convert md file to html file
-$markdown = Markdown::new()
+$mkd = Markdown::new()
 
   # set markdown file to compile
-  -> setFile( __DIR__ . '/files/hello.md' )
+  $mkd -> setFile( __DIR__ . '/files/hello.md' )
 
   # set directory to store compiled html files 
-  -> setCompileDir( __DIR__ . '/pages/' )
+  $mkd -> setCompileDir( __DIR__ . '/pages/' )
 
   # convert to html
-  -> toHtmlFile( filename: 'hello' ); 
+  $mkd -> toHtmlFile( filename: 'hello' ); 
 
 # check if markdown compile to html successfully 
-if ($markdown) {
+if ($mkd) {
    print ("compile successful");
 }
 
