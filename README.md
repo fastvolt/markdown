@@ -60,7 +60,7 @@ $file_directory = __DIR__ . '/assets/sample.md';
 $html = Markdown::new();
 
  # set markdown file to compile
-$html -> setFile( $file );
+$html -> setFile( $file_directory );
 
  # convert to html
 print $html -> toHtml();
