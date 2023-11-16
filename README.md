@@ -1,6 +1,12 @@
-# Fastvolt Markdown - The Library
+<p align="center">
+  <a href="#" target="_blank">
+    <img src="https://github.com/fastvolt/branding/blob/ca3d227ee0f9c276d950cc6fee4979a65d14dd3d/fastvolt-markdown.png" alt="Fastvolt"><br/>
+  </a>
+    A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
-A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
+</p>
+
+
 
 [![PHP Composer](https://github.com/fastvolt/markdown/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/fastvolt/markdown/actions/workflows/php.yml) [![License](https://img.shields.io/badge/License-MIT-yellow)](#license) [![issues - markdown](https://img.shields.io/github/issues/fastvolt/markdown)](https://github.com/fastvolt/markdown/issues) [![fastvolt - markdown](https://img.shields.io/static/v1?label=fastvolt&message=markdown&color=yellow&logo=github)](https://github.com/fastvolt/markdown "Go to GitHub repo") ![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
 
