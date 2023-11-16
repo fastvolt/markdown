@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#" target="_blank">
-    <img src="https://github.com/fastvolt/branding/blob/8ae470a848027c0b01d6066e7c710dc8e64eee97/media/images/fsv.png" alt="Fastvolt" width="256px" height="256px"><br/>
+    <img src="https://github.com/fastvolt/branding/blob/1c5280745d9c671313f319b7f07d6706a9f75ea9/media/images/fast-mrk.png" alt="Fastvolt" width="256px" height="256px"><br/>
   </a>
     A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
