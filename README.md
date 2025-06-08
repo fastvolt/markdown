@@ -1,8 +1,24 @@
-# Fastvolt Markdown - The Library
+p align="center">
+  <a href="#" target="_blank">
+    <img src="https://github.com/fastvolt/branding/blob/1c5280745d9c671313f319b7f07d6706a9f75ea9/media/images/fast-mrk.png" alt="Fastvolt" width="256px" height="256px"><br/>
+  </a>
+  
+  # Markdown Parser For PHP 
+  
+    A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
 
-A Fast, Simple and Straight-forward Markdown to HTML Converter for PHP.
+</p>
+
 
 [![PHP Composer](https://github.com/fastvolt/markdown/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/fastvolt/markdown/actions/workflows/php.yml) [![License](https://img.shields.io/badge/License-MIT-yellow)](#license) [![issues - markdown](https://img.shields.io/github/issues/fastvolt/markdown)](https://github.com/fastvolt/markdown/issues) [![fastvolt - markdown](https://img.shields.io/static/v1?label=fastvolt&message=markdown&color=yellow&logo=github)](https://github.com/fastvolt/markdown "Go to GitHub repo") ![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
+
+
+## Installation
+
+```php
+composer require fastvolt/markdown
+```
+
 
 ## Usage
 
@@ -41,10 +57,7 @@ echo $markdown->toHtml(); // <h2>Hello, World</h2>
 
 > THIS IS A BLOCKQUOTE
 
-```py 
-def Greeting(): 
-    return 'hello'
-```
+[A LINK](https://github.com/fastvolt)
 
 ```
 
@@ -68,23 +81,24 @@ echo $markdown->toHtml();
 
 ```
 
-### Code Output:
+### Result Output:
 
 ```html
-  <h4>Heading 4</h4>
-  <h3>Heading 3</h3>
-  <h2>Heading 2</h2><h1>Heading 1</h1>
-  <ul>
-  <li>List 1</li>
-  <li>List 2</li>
-  </ul>
-  <blockquote><p>THIS IS A BLOCKQUOTE</p></blockquote>
-   <pre><code class="language-py">def Greeting(): 
-     return 'hello'</code>
-   </pre>
-  <a href="https://github.com/fastvolt">A LINK</a>
+
+<h4>Heading 4</h4>
+<h3>Heading 3</h3>
+<h2>Heading 2</h2><h1>Heading 1</h1>
+<ul>
+ <li>List 1</li>
+ <li>List 2</li>
+</ul>
+<blockquote><p>THIS IS A BLOCKQUOTE</p></blockquote>
+   
+<a href="https://github.com/fastvolt">A LINK</a>
+
 ```
-<br>
+
+
 
 ## Convert Markdown File to HTML File
 
@@ -95,7 +109,6 @@ echo $markdown->toHtml();
 ## Here is a Markdown File Waiting To Be Compiled To an HTML File 
 
 ```
-<br>
 
 > **file:** index.php
 
@@ -197,7 +210,8 @@ if ($saveHTML) {
 
 ```
 
-**Result Output:**
+#### Result Output 
+
 ```html
 
 <h1>Blog Title</h1>
@@ -210,12 +224,13 @@ if ($saveHTML) {
 <p>Here are the lists of my projects:</p>
 
 <ul>
-<li>Dragon CMS</li>
-<li>Fastvolt Framework.
-<ul>
-<li>Fastvolt Router</li>
-<li>Markdown Parser.</li>
-</ul></li>
+ <li>Dragon CMS</li>
+ <li>Fastvolt Framework.
+   <ul>
+     <li>Fastvolt Router</li>
+     <li>Markdown Parser.</li>
+   </ul>
+ </li>
 </ul>
 
 <h3>Thanks for Visiting My BlogPage</h3>
