@@ -66,25 +66,23 @@ $instance->setFile($markdown_file);
 # convert the markdown file to raw HTML output
 echo $html->toHtml();
 
-/** OUTPUT: 
- * <h4>Heading 4</h4>
- * <h3>Heading 3</h3>
- * <h2>Heading 2</h2><h1>Heading 1</h1>
+```
 
- * <ul>
- * <li>List 1</li>
- * <li>List 2</li>
- * </ul>
+### Code Output:
 
- * <blockquote><p>THIS IS A BLOCKQUOTE</p></blockquote>
-
- *  <pre><code class="language-py">def Greeting(): 
- *    return 'hello'</code>
- *  </pre>
-
- * <a href="https://github.com/fastvolt">A LINK</a>
-*/
-
+```html
+  <h4>Heading 4</h4>
+  <h3>Heading 3</h3>
+  <h2>Heading 2</h2><h1>Heading 1</h1>
+  <ul>
+  <li>List 1</li>
+  <li>List 2</li>
+  </ul>
+  <blockquote><p>THIS IS A BLOCKQUOTE</p></blockquote>
+   <pre><code class="language-py">def Greeting(): 
+     return 'hello'</code>
+   </pre>
+  <a href="https://github.com/fastvolt">A LINK</a>
 ```
 <br>
 
