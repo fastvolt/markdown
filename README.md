@@ -42,13 +42,16 @@ use FastVolt\Helper\Markdown;
 
 $text = "## Hello, World";
 
-$markdown = Markdown::new()
-    ->setContent($text);
+// initialize markdown object
+$markdown = Markdown::new();
+
+// set markdown content 
+$markdown->setContent($text);
 
 echo $markdown->toHtml();
 ```
 
-### Result:
+### Output:
 
 ```html
 <h2>Hello, World</h2>
@@ -78,7 +81,8 @@ echo $markdown->toHtml();
 
 ```php
 $markdown = Markdown::new();
-    
+
+// set markdown file to parse 
 $markdown->setFile('./markdowns/sample.md');
 
 echo $markdown->toHtml();
