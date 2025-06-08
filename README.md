@@ -1,4 +1,4 @@
-p align="center">
+<p align="center">
   <a href="#" target="_blank">
     <img src="https://github.com/fastvolt/branding/blob/1c5280745d9c671313f319b7f07d6706a9f75ea9/media/images/fast-mrk.png" alt="Fastvolt" width="256px" height="256px"><br/>
   </a>
