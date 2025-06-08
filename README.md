@@ -35,7 +35,7 @@ composer require fastvolt/markdown
 ```
 
 
-### 📦 Basic Usage
+## 📦 Basic Usage
 
 ```php
 use FastVolt\Helper\Markdown;
@@ -48,7 +48,7 @@ $markdown = Markdown::new()
 echo $markdown->toHtml();
 ```
 
-#### Result:
+### Result:
 
 ```html
 <h2>Hello, World</h2>
