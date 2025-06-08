@@ -30,7 +30,7 @@
 
 ## 🚀 Installation
 
-```cmd
+```shell
 composer require fastvolt/markdown
 ```
 
@@ -127,14 +127,16 @@ echo "Compiled to ./pages/newHTMLFile.html";
 You can sanitize input HTML using the sanitize flag:
 
 ```php
-$markdown = Markdown::new(sanitize: true)
-    ->setContent('<h1>Hello World</h1>');
+$markdown = Markdown::new(sanitize: true);
+
+$markdown->setContent('<h1>Hello World</h1>');
 
 echo $markdown->toHtml();
-
+```
 
 > ***Output:***
 
+```html
 <p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
 ```
 
