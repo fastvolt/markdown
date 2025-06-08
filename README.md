@@ -54,9 +54,7 @@ echo $markdown->toHtml();
 <h2>Hello, World</h2>
 ```
 
-<br>
 
----
 
 ## 📄 Convert Markdown File to HTML
 
@@ -79,13 +77,14 @@ echo $markdown->toHtml();
 > ***index.php:***
 
 ```php
-$markdown = Markdown::new()
-    ->setFile('./markdowns/sample.md');
+$markdown = Markdown::new();
+    
+$markdown->setFile('./markdowns/sample.md');
 
 echo $markdown->toHtml();
 ```
 
-> ***Result:***
+> ***Output:***
 
 ```html
 <h4>Heading 4</h4>
