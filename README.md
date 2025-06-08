@@ -15,19 +15,19 @@ use FastVolt\Helper\Markdown;
 $text = "## Hello, World";
 
 # initialize markdown instance
-$instance = Markdown::new();
+$markdown = Markdown::new();
 
 # set markdown content
-$instance->setContent($text);
+$markdown->setContent($text);
 
 # output result as html
-echo $html->toHtml(); // <h2>Hello, World</h2>
+echo $markdown->toHtml(); // <h2>Hello, World</h2>
 
 ```
 
 ## Convert Markdown File to Html
 
-> **file:** assets/sample.md
+> **file:** markdowns/sample.md
 
 ```md 
 
@@ -46,6 +46,8 @@ def Greeting():
     return 'hello'
 ```
 
+```
+
 <br>
 
 > **file:** index.php
@@ -54,17 +56,15 @@ def Greeting():
 
 <?php
 
-use FastVolt\Helper\Markdown;
+$markdown_file = './markdowns/sample.md';
 
-$markdown_file = './assets/sample.md';
-
-$instance = Markdown::new();
+$markdown = Markdown::new();
 
 # set the markdown file location
-$instance->setFile($markdown_file);
+$markdown->setFile($markdown_file);
 
 # convert the markdown file to raw HTML output
-echo $html->toHtml();
+echo $markdown->toHtml();
 
 ```
 
@@ -92,7 +92,7 @@ echo $html->toHtml();
 
 ```md
 
-## Here is a Markdown Page Waiting To Be Compiled To an HTML File 
+## Here is a Markdown File Waiting To Be Compiled To an HTML File 
 
 ```
 <br>
@@ -100,8 +100,6 @@ echo $html->toHtml();
 > **file:** index.php
 
 ```php
-
-use FastVolt\Helper\Markdown;
 
 $markdown = Markdown::new() 
   # set markdown file
@@ -120,7 +118,7 @@ if ($markdown) {
 ```
 
 ## Santizing HTML Output
-The markdown `new` static method accepts only one parameter which is: 
+The markdown's `new` static method accepts only one parameter which is: 
 
 > `sanitize`: boolean
 
@@ -134,11 +132,15 @@ $markdown = Markdown::new(sanitize: true)
 
 ```
 
-***Result Output***: `<p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>`.
+#### Result Output 
+
+```
+<p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
+```
 
 
 ## Other Advanced Sample
-Assuming we have two markdown files with header and footer content for our page.
+Assuming we have two markdown files with header and footer contents:
 
 > **file:** markdowns/Header.md
 
@@ -153,7 +155,7 @@ Assuming we have two markdown files with header and footer content for our page.
 ### Thanks for Visiting My BlogPage
 ```
 
-Now, let's see how we can include markdown files between our logic:
+Now, let's see how we can include the markdown files between our logic:
 
 > **file:** index.php
 
