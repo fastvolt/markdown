@@ -30,7 +30,7 @@
 
 ## 🚀 Installation
 
-```cd
+```auto
 composer require fastvolt/markdown
 ```
 
@@ -121,12 +121,16 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 > ***index.php:***
 
 ```php
+
 $markdown = Markdown::new()
     ->setFile(__DIR__ . '/markdowns/blogPost.md')
     ->setCompileDir(__DIR__ . '/pages/')
     ->toHtmlFile(filename: 'newHTMLFile');
 
-echo "Compiled to ./pages/newHTMLFile.html";
+if ($markdown) {
+  echo "Compiled to ./pages/newHTMLFile.html";
+}
+
 ```
 
 
@@ -193,6 +197,24 @@ echo $markdown->toHtml();
 </ul>
 <h3>Thanks for Visiting My BlogPage</h3>
 ```
+
+## Supported Formatting Symbols 
+
+| Markdown Syntax              | Description                 | Example Syntax                           | Rendered Output                        |
+|-----------------------------|-----------------------------|-------------------------------------------|----------------------------------------|
+| `#` to `######`             | Headings (H1–H6)            | `## Heading 2`                            | <h2>Heading 2</h2>                     |
+| `**text**` or `__text__`    | Bold                        | `**bold**`                                | <strong>bold</strong>                  |
+| `*text*` or `_text_`        | Italic                      | `*italic*`                                | <em>italic</em>                        |
+| `~~text~~`                  | Strikethrough               | `~~strike~~`                              | <del>strike</del>                      |
+| `` `code` ``                | Inline code                 | `` `echo` ``                              | <code>echo</code>                      |
+| <code>```<br>code block<br>```</code> | Code block              | ```` ```php\n echo "Hi"; \n``` ````       | `<pre><code>...</code></pre>`          |
+| `-`, `+`, or `*`            | Unordered list              | `- Item 1`<br>`* Item 2`                  | `<ul><li>Item</li></ul>`              |
+| `1.` `2.`                   | Ordered list                | `1. Item`<br>`2. Item`                    | `<ol><li>Item</li></ol>`              |
+| `[text](url)`               | Hyperlink                   | `[GitHub](https://github.com)`           | <a href="https://github.com">GitHub</a> |
+| `> blockquote`              | Blockquote                  | `> This is a quote`                      | <blockquote>This is a quote</blockquote> |
+| `---`, `***`, `___`         | Horizontal Rule             | `---`                                     | `<hr>`                                |
+| `![alt](image.jpg)`         | Image                       | `![Logo](logo.png)`                      | `<img src="logo.png" alt="Logo">`     |
+| `\`                         | Escape special character    | `\*not italic\*`                          | *not italic* (as text)                |
 
 
 ## ✅ Requirements
