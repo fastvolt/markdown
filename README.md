@@ -46,8 +46,6 @@ def Greeting():
     return 'hello'
 ```
 
-[A LINK](https://github.com/fastvolt)
-
 <br>
 
 > **file:** index.php
@@ -90,7 +88,7 @@ echo $html->toHtml();
 ```
 <br>
 
-## Convert Markdown File to Html File
+## Convert Markdown File to HTML File
 
 > **file:** markdowns/blogPost.md
 
