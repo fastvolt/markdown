@@ -54,6 +54,8 @@ echo $markdown->toHtml();
 <h2>Hello, World</h2>
 ```
 
+<br>
+
 ---
 
 ## 📄 Convert Markdown File to HTML
@@ -83,7 +85,8 @@ $markdown = Markdown::new()
 echo $markdown->toHtml();
 ```
 
-Result
+> ***Result:***
+
 ```html
 <h4>Heading 4</h4>
 <h3>Heading 3</h3>
@@ -97,7 +100,7 @@ Result
 <a href="https://github.com/fastvolt">A LINK</a>
 ```
 
----
+
 
 ## 📝 Compile Markdown to HTML File
 
@@ -118,7 +121,6 @@ $markdown = Markdown::new()
 echo "Compiled to ./pages/newHTMLFile.html";
 ```
 
----
 
 ## 🔒 Sanitizing HTML Output
 
@@ -136,7 +138,7 @@ echo $markdown->toHtml();
 <p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
 ```
 
----
+
 
 ## ⚙️ Advanced Use Case
 
@@ -182,25 +184,18 @@ echo $markdown->toHtml();
 <h3>Thanks for Visiting My BlogPage</h3>
 ```
 
----
 
 ## ✅ Requirements
 
 PHP 8.1 or higher
 
 
----
-
 ## ℹ️ Notes
 
 > This library is an extended and simplified version of the excellent Parsedown by Erusev.
 
 
----
 
 ## 📄 License
 
 This project is open-source and licensed under the MIT License by @fastvolt.
-
-
----
