@@ -27,17 +27,15 @@
   <img src="https://img.shields.io/badge/maintained-yes-blue" alt="Maintained: Yes" />
 </p>
 
----
 
-🚀 Installation
+## 🚀 Installation
 
 ```cmd
 composer require fastvolt/markdown
 ```
 
----
 
-📦 Basic Usage
+### 📦 Basic Usage
 
 ```php
 use FastVolt\Helper\Markdown;
@@ -50,7 +48,7 @@ $markdown = Markdown::new()
 echo $markdown->toHtml();
 ```
 
-Result:
+#### Result:
 
 ```html
 <h2>Hello, World</h2>
@@ -58,9 +56,9 @@ Result:
 
 ---
 
-📄 Convert Markdown File to HTML
+## 📄 Convert Markdown File to HTML
 
-> ***sample.md***
+> ***sample.md:***
 
 ```md
 #### Heading 4
@@ -101,13 +99,15 @@ Result
 
 ---
 
-📝 Compile Markdown to HTML File
+## 📝 Compile Markdown to HTML File
 
-blogPost.md
+> ***blogPost.md:***
 
-## Here is a Markdown File Waiting To Be Compiled To an HTML File
+```md
+Here is a Markdown File Waiting To Be Compiled To an HTML File
+```
 
-index.php
+> ***index.php:***
 
 ```php
 $markdown = Markdown::new()
@@ -120,7 +120,7 @@ echo "Compiled to ./pages/newHTMLFile.html";
 
 ---
 
-🔒 Sanitizing HTML Output
+## 🔒 Sanitizing HTML Output
 
 You can sanitize input HTML using the sanitize flag:
 
@@ -130,14 +130,15 @@ $markdown = Markdown::new(sanitize: true)
 
 echo $markdown->toHtml();
 
-Output
+
+> ***Output:***
 
 <p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
 ```
 
 ---
 
-⚙️ Advanced Use Case
+## ⚙️ Advanced Use Case
 
 Combine multiple markdown files and inline content:
 
@@ -161,7 +162,7 @@ $markdown = Markdown::new(sanitize: true)
 echo $markdown->toHtml();
 ```
 
-***Output:***
+> ***Output:***
 
 ```html
 <h1>Blog Title</h1>
@@ -183,21 +184,21 @@ echo $markdown->toHtml();
 
 ---
 
-✅ Requirements
+## ✅ Requirements
 
 PHP 8.1 or higher
 
 
 ---
 
-ℹ️ Notes
+## ℹ️ Notes
 
 > This library is an extended and simplified version of the excellent Parsedown by Erusev.
 
 
 ---
 
-📄 License
+## 📄 License
 
 This project is open-source and licensed under the MIT License by @fastvolt.
 
