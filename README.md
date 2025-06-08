@@ -30,7 +30,7 @@
 
 ## 🚀 Installation
 
-```shell
+```cd
 composer require fastvolt/markdown
 ```
 
@@ -51,12 +51,17 @@ $markdown->setContent($text);
 echo $markdown->toHtml();
 ```
 
-### Output:
+#### Output:
 
 ```html
 <h2>Hello, World</h2>
 ```
 
+<br>
+
+---
+
+<br>
 
 
 ## 📄 Convert Markdown File to HTML
