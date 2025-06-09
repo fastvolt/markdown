@@ -34,6 +34,7 @@
 composer require fastvolt/markdown
 ```
 
+<br>
 
 ## 📦 Basic Usage
 
@@ -104,7 +105,7 @@ echo $markdown->toHtml();
 <a href="https://github.com/fastvolt">A LINK</a>
 ```
 
-
+<br>
 
 ## 📝 Compile Markdown to HTML File
 
