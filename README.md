@@ -49,6 +49,7 @@ $markdown = Markdown::new();
 // set markdown content 
 $markdown->setContent($text);
 
+// compile as raw HTML
 echo $markdown->toHtml();
 ```
 
@@ -87,6 +88,7 @@ $markdown = Markdown::new();
 // set markdown file to parse 
 $markdown->setFile('./markdowns/sample.md');
 
+// compile as raw HTML
 echo $markdown->toHtml();
 ```
 
@@ -120,8 +122,11 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 ```php
 
 $markdown = Markdown::new()
+    // set markdown file
     ->setFile(__DIR__ . '/markdowns/blogPost.md')
+    // set compilation directory 
     ->setCompileDir(__DIR__ . '/pages/')
+    // compile as an html file 'newHTMLFile.html'
     ->toHtmlFile(filename: 'newHTMLFile');
 
 if ($markdown) {
@@ -132,9 +137,9 @@ if ($markdown) {
 
 <br>
 
-## 🔒 Sanitizing HTML Output
+## 🔒 Sanitizing HTML Output (XSS Protection)
 
-You can sanitize input HTML using the sanitize flag:
+You can sanitize input HTML and prevent cross-Site scripting (XSS) attack using the sanitize flag:
 
 ```php
 $markdown = Markdown::new(sanitize: true);
