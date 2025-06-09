@@ -59,10 +59,6 @@ echo $markdown->toHtml();
 
 <br>
 
----
-
-<br>
-
 
 ## 📄 Convert Markdown File to HTML
 
@@ -133,6 +129,7 @@ if ($markdown) {
 
 ```
 
+<br>
 
 ## 🔒 Sanitizing HTML Output
 
@@ -152,7 +149,7 @@ echo $markdown->toHtml();
 <p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
 ```
 
-
+<br>
 
 ## ⚙️ Advanced Use Case
 
@@ -198,6 +195,8 @@ echo $markdown->toHtml();
 <h3>Thanks for Visiting My BlogPage</h3>
 ```
 
+<br>
+
 ## Supported Formatting Symbols 
 
 | Markdown Syntax              | Description                 | Example Syntax                           | Rendered Output                        |
@@ -216,17 +215,19 @@ echo $markdown->toHtml();
 | `![alt](image.jpg)`         | Image                       | `![Logo](logo.png)`                      | `<img src="logo.png" alt="Logo">`     |
 | `\`                         | Escape special character    | `\*not italic\*`                          | *not italic* (as text)                |
 
+<br>
 
 ## ✅ Requirements
 
 PHP 8.1 or higher
 
+<br>
 
 ## ℹ️ Notes
 
-> This library is an extended and simplified version of the excellent Parsedown by Erusev.
+> This library is an extended and simplified version of the excellent [Parsedown](https://github.com/erusev/parsedown/) by Erusev.
 
-
+<br>
 
 ## 📄 License
 
