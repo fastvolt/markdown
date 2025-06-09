@@ -154,11 +154,46 @@ echo $markdown->toHtml();
 
 ## ⚙️ Advanced Use Case
 
-Combine multiple markdown files and inline content:
+### Inline Markdown
+```php
+$markdown = Markdown::new();
+
+$markdown->setInlineContent('_My name is **vincent**, the co-author of this blog_');
+
+echo $markdown->ToHtml();
+```
+
+> ***Output:***
+
+```html
+<i>My name is <strong>vincent</strong>, the co-author of this blog</i>
+```
+
+> ***NOTE:*** Some markdown symbols are not supported with this method
+
+
+### Example #1
+
+> ***Header.md***
+```md
+# Blog Title  
+### Here is the Blog Sub-title
+```
+
+> ***Footer.md***
+```md
+### Thanks for Visiting My BlogPage
+```
+
+Combine multiple markdown files, contents and compile them in multiple directories:
+
+> ***index.php***
 
 ```php
 $markdown = Markdown::new(sanitize: true)
-    ->setFile('./markdowns/Header.md')
+    // include header file markdown contents
+    ->setFile('./Header.md')
+    // body contents
     ->setInlineContent('_My name is **vincent**, the co-author of this blog_')
     ->setContent('Kindly follow me on my GitHub page via: [@vincent](https://github.com/oladoyinbov).')
     ->setContent('Here are the lists of my projects:')
@@ -168,12 +203,19 @@ $markdown = Markdown::new(sanitize: true)
   + Fastvolt Router
   + Markdown Parser.
     ')
-    ->setFile('./markdowns/Footer.md')
+    // include footer file markdown contents
+    ->setFile('./Footer.md')
+    // set compilation directory 
     ->setCompileDir('./pages/')
+    // set another compilation directory to backup the result
     ->setCompileDir('./backup/pages/')
+    // compile and save as 'homepage.html'
     ->toHtmlFile(file_name: 'homepage');
 
-echo $markdown->toHtml();
+if ($markdown) {
+   // display compiled contents after storing the result
+   echo $markdown->toHtml();
+}
 ```
 
 > ***Output:***
