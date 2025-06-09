@@ -171,8 +171,10 @@ echo $markdown->ToHtml();
 
 > ***NOTE:*** Some markdown symbols are not supported with this method
 
+<br>
 
 ### Example #1
+Combine multiple markdown files, contents and compile them in multiple directories:
 
 > ***Header.md***
 ```md
@@ -184,8 +186,6 @@ echo $markdown->ToHtml();
 ```md
 ### Thanks for Visiting My BlogPage
 ```
-
-Combine multiple markdown files, contents and compile them in multiple directories:
 
 > ***index.php***
 
@@ -209,16 +209,15 @@ $markdown = Markdown::new(sanitize: true)
     ->setCompileDir('./pages/')
     // set another compilation directory to backup the result
     ->setCompileDir('./backup/pages/')
-    // compile and save as 'homepage.html'
+    // compile and store as 'homepage.html'
     ->toHtmlFile(file_name: 'homepage');
 
 if ($markdown) {
-   // display compiled contents after storing the result
-   echo $markdown->toHtml();
+   echo "Compile Successful";
 }
 ```
 
-> ***Output:***
+> ***Output:*** `pages/homepage.html`, `backup/pages/homepage.html`
 
 ```html
 <h1>Blog Title</h1>
@@ -262,7 +261,7 @@ if ($markdown) {
 
 ## ✅ Requirements
 
-PHP 8.1 or higher
+PHP 8.1 or newer.
 
 <br>
 
