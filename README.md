@@ -62,7 +62,7 @@ echo $markdown->toHtml();
 <br>
 
 
-## 📄 Convert Markdown File to HTML
+## 📄 Convert Markdown File to Raw HTML
 
 > ***sample.md:***
 
@@ -139,10 +139,12 @@ if ($markdown) {
 
 ## 🔒 Sanitizing HTML Output (XSS Protection)
 
-You can sanitize input HTML and prevent cross-Site scripting (XSS) attack using the sanitize flag:
+You can sanitize input HTML and prevent cross-site scripting (XSS) attack using the `sanitize` flag:
 
 ```php
-$markdown = Markdown::new(sanitize: true);
+$markdown = Markdown::new(
+   sanitize: true
+);
 
 $markdown->setContent('<h1>Hello World</h1>');
 
