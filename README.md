@@ -86,7 +86,7 @@ echo $markdown->toHtml();
 $markdown = Markdown::new();
 
 // set markdown file to parse 
-$markdown->setFile('./markdowns/sample.md');
+$markdown->setFile('./sample.md');
 
 // compile as raw HTML
 echo $markdown->toHtml();
@@ -123,7 +123,7 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 
 $markdown = Markdown::new()
     // set markdown file
-    ->setFile(__DIR__ . '/markdowns/blogPost.md')
+    ->setFile(__DIR__ . '/blogPost.md')
     // set compilation directory 
     ->setCompileDir(__DIR__ . '/pages/')
     // compile as an html file 'newHTMLFile.html'
@@ -196,7 +196,7 @@ Combine multiple markdown files, contents and compile them in multiple directori
 
 ```php
 $markdown = Markdown::new(sanitize: true)
-    // include header file markdown contents
+    // include header file's markdown contents
     ->setFile('./Header.md')
     // body contents
     ->setInlineContent('_My name is **vincent**, the co-author of this blog_')
@@ -208,7 +208,7 @@ $markdown = Markdown::new(sanitize: true)
   + Fastvolt Router
   + Markdown Parser.
     ')
-    // include footer file markdown contents
+    // include footer file's markdown contents
     ->setFile('./Footer.md')
     // set compilation directory 
     ->setCompileDir('./pages/')
