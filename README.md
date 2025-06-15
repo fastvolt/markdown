@@ -126,7 +126,7 @@ $markdown = Markdown::new()
     ->setFile(__DIR__ . '/blogPost.md')
     // set compilation directory 
     ->setCompileDir(__DIR__ . '/pages/')
-    // compile as an html file 'newHTMLFile.html'
+    // compile as an html file named 'newHTMLFile.html'
     ->toHtmlFile(filename: 'newHTMLFile');
 
 if ($markdown) {
