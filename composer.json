@@ -21,7 +21,6 @@
         }
     ],
     "require": {
-        "amphp/file": "^3.0",
         "php": "^8.1"
     },
     "require-dev": {

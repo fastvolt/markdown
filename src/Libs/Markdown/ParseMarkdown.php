@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FastVolt\Helper\Libs\Markdown\Process;
+namespace FastVolt\Helper\Libs\Markdown;
 
 class ParseMarkdown
 {
@@ -190,7 +190,7 @@ class ParseMarkdown
      * 
      * @param string $text
      * 
-     * @return bool
+     * @return string
      */
     public function markdown_text(string $text): string
     {

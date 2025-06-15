@@ -4,20 +4,14 @@ declare(strict_types=1);
 
 namespace FastVolt\Helper;
 
-use Exception;
-use LogicException;
-use ReturnTypeWillChange;
-use Throwable;
-use TypeError;
-
-// THE FILE INCLUSION NEEDS FIXING...
+use FastVolt\Helper\Libs\Markdown\ParseMarkdown;
 
 final class Markdown
 {
     private array $contents;
     private array $compileDir = [];
 
-    private function __construct(
+    public function __construct(
         # sanitize outputs
         protected bool $sanitize = true
     ) {}
@@ -93,7 +87,7 @@ final class Markdown
                 }
             }
             return $this;
-        } catch (Exception|TypeError|Throwable $e) {
+        } catch (\Exception|\TypeError|\Throwable $e) {
             throw $e;
         }
     }
@@ -105,7 +99,7 @@ final class Markdown
      *
      * @return string|\Exception|null
      */
-    private function read_file(string $filename): string|Exception|null
+    private function read_file(string $filename): string|\Exception|null
     {
         if (!file_exists($filename)) {
             $filename = !str_starts_with($filename, '/')
@@ -113,11 +107,11 @@ final class Markdown
                 : $filename;
 
             if (!file_exists($filename)) {
-                return throw new Exception("File Name or Directory ($filename) Does Not Exist!");
+                throw new \Exception("File Name or Directory ($filename) Does Not Exist!");
             }
         }
 
-        return \Amp\File\read($filename);
+        return file_get_contents($filename);
     }
 
     /**
@@ -127,7 +121,7 @@ final class Markdown
      */
     private function compileSingleLinedMarkdown(string $markdown): ?string
     {
-        $instance = new \FastVolt\Helper\Libs\Markdown\Process\ParseMarkdown(
+        $instance = new ParseMarkdown(
             $this->sanitize
         );
 
@@ -141,7 +135,7 @@ final class Markdown
      */
     private function compileMultiLinedMarkdown(string $markdown): ?string
     {
-        $instance = new \FastVolt\Helper\Libs\Markdown\Process\ParseMarkdown(
+        $instance = new ParseMarkdown(
             $this->sanitize
         );
 
@@ -180,12 +174,12 @@ final class Markdown
     /**
      * Compile Markdown to Raw HTML Output
      *
-     * @return string|null|LogicException
+     * @return string|null|\LogicException
      */
-    public function toHtml(): LogicException|string|null
+    public function toHtml(): \LogicException|string|null
     {
         if (!isset($this->contents) || count($this->contents) == 0) {
-            throw new LogicException(
+            throw new \LogicException(
                 message: 'Set a Markdown Content or File Before Conversion!'
             );
         }
@@ -210,16 +204,16 @@ final class Markdown
      *
      * @param string $file_name: rename compiled html file
      *
-     * @return bool|LogicException
+     * @return bool|\LogicException
      */
-    public function toHtmlFile(string $file_name = 'compiledmarkdown.html'): LogicException|bool
+    public function toHtmlFile(string $file_name = 'compiledmarkdown.html'): \LogicException|bool
     {
         // validate file name
         $this->validateFileName($file_name);
 
         // check if compilation directories are set
         if (!isset($this->compileDir) || count($this->compileDir) == 0) {
-            throw new LogicException('Ensure To Set A Storage Directory For Your Compiled HTML File!');
+            throw new \LogicException('Ensure To Set A Storage Directory For Your Compiled HTML File!');
         }
 
         $html_contents = [];
@@ -244,7 +238,7 @@ final class Markdown
             );
         }
         
-        throw new LogicException('Set A Markdown File or Content to Compile!');
+        throw new \LogicException('Set A Markdown File or Content to Compile!');
     }
 
     private function saveCompiledMarkdownFiles(array $compileDirs, string $file_name, array $contents): bool
