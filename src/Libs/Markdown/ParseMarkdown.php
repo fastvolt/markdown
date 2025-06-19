@@ -773,7 +773,7 @@ class ParseMarkdown
         return null;
     }
 
-    protected function blockSetextHeader(array $Line, array $markdownBlock = null): ?array
+    protected function blockSetextHeader(array $Line, array $markdownBlock = []): ?array
     {
         if (!isset($markdownBlock) or isset($markdownBlock['type']) or isset($markdownBlock['interrupted'])) {
             return null;
@@ -895,7 +895,7 @@ class ParseMarkdown
         return null;
     }
 
-    protected function blockTable($Line, array $markdownBlock = null)
+    protected function blockTable($Line, array $markdownBlock = [])
     {
         if (!isset($markdownBlock) or isset($markdownBlock['type']) or isset($markdownBlock['interrupted'])) {
             return null;
