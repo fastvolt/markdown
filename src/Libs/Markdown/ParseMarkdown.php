@@ -8,6 +8,7 @@ class ParseMarkdown
 {
     private bool $breaksEnabled = false;
     protected bool $setBreaksEnabled = false;
+    protected bool $strictMode = false;
     protected bool $setUrlsLinked = false;
     protected bool $setMarkupEscaped = false;
     protected bool $safeMode = true;
