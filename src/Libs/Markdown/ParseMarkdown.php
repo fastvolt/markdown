@@ -11,6 +11,7 @@ class ParseMarkdown
     protected bool $setUrlsLinked = false;
     protected bool $setMarkupEscaped = false;
     protected bool $safeMode = true;
+    protected bool $strictMode = true;
     protected bool $markupEscaped = false;
     protected const version = '1.7.4';
     private static array $instances = [];
@@ -773,7 +774,7 @@ class ParseMarkdown
         return null;
     }
 
-    protected function blockSetextHeader(array $Line, array $markdownBlock = null): ?array
+    protected function blockSetextHeader(array $Line, ?array $markdownBlock = []): ?array
     {
         if (!isset($markdownBlock) or isset($markdownBlock['type']) or isset($markdownBlock['interrupted'])) {
             return null;
@@ -895,13 +896,13 @@ class ParseMarkdown
         return null;
     }
 
-    protected function blockTable($Line, array $markdownBlock = null)
+    protected function blockTable($Line, ?array $markdownBlock = [])
     {
-        if (!isset($markdownBlock) or isset($markdownBlock['type']) or isset($markdownBlock['interrupted'])) {
+        if (!isset($markdownBlock) || isset($markdownBlock['type']) || isset($markdownBlock['interrupted'])) {
             return null;
         }
 
-        if (strpos($markdownBlock['element']['text'], '|') !== false and chop($Line['text'], ' -:|') === '') {
+        if (strpos($markdownBlock['element']['text'], '|') !== false || chop($Line['text'], ' -:|') === '') {
             $alignments = [];
 
             $divider = $Line['text'];
@@ -934,47 +935,42 @@ class ParseMarkdown
 
 
             $HeadermarkdownElements = [];
-
             $header = $markdownBlock['element']['text'];
-
             $header = trim($header);
             $header = trim($header, '|');
-
             $headerCells = explode('|', $header);
 
             foreach ($headerCells as $index => $headerCell) {
                 $headerCell = trim($headerCell);
-
-                $HeadermarkdownElement = array(
+                $HeadermarkdownElement = [
                     'name' => 'th',
                     'text' => $headerCell,
                     'handler' => 'line',
-                );
+                ];
 
                 if (isset($alignments[$index])) {
                     $alignment = $alignments[$index];
-
-                    $HeadermarkdownElement['attributes'] = array(
+                    $HeadermarkdownElement['attributes'] = [
                         'style' => 'text-align: ' . $alignment . ';',
-                    );
+                    ];
                 }
 
                 $HeadermarkdownElements[] = $HeadermarkdownElement;
             }
 
-            $markdownBlock = array(
+            $markdownBlock = [
                 'alignments' => $alignments,
                 'identified' => true,
-                'element' => array(
+                'element' => [
                     'name' => 'table',
                     'handler' => 'elements',
-                ),
-            );
+                ],
+            ];
 
-            $markdownBlock['element']['text'][] = array(
+            $markdownBlock['element']['text'][] = [
                 'name' => 'thead',
                 'handler' => 'elements',
-            );
+            ];
 
             $markdownBlock['element']['text'][] = array(
                 'name' => 'tbody',
@@ -994,7 +990,7 @@ class ParseMarkdown
         return null;
     }
 
-    protected function blockTableContinue($Line, array $markdownBlock)
+    protected function blockTableContinue($Line, $markdownBlock)
     {
         if (isset($markdownBlock['interrupted'])) {
             return null;
@@ -1020,9 +1016,9 @@ class ParseMarkdown
                 );
 
                 if (isset($markdownBlock['alignments'][$index])) {
-                    $markdownElement['attributes'] = array(
+                    $markdownElement['attributes'] = [
                         'style' => 'text-align: ' . $markdownBlock['alignments'][$index] . ';',
-                    );
+                    ];
                 }
 
                 $markdownElements[] = $markdownElement;
