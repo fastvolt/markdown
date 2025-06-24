@@ -167,7 +167,7 @@ $markdown = Markdown::new();
 
 $markdown->setInlineContent('_My name is **vincent**, the co-author of this blog_');
 
-echo $markdown->ToHtml();
+echo $markdown->toHtml();
 ```
 
 > ***Output:***
