@@ -110,7 +110,7 @@ echo $markdown->toHtml();
 
 <br>
 
-## 📝 Compile Markdown to HTML File
+## 📝 Convert Markdown File to An HTML File
 
 > ***blogPost.md:***
 
