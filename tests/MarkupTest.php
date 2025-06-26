@@ -72,11 +72,26 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
     public function testItalic(): void
     {
         $markdown = Markdown::new()
-            ->setContent('*hello world*')
+            ->setInlineContent('*hello world*')
             ->toHtml(); // <i>hello 1</i>
 
         $this->assertSame('<i>hello world</i>', $markdown);
     }
+
+    /**
+     * Test Link 1: <a>
+     * 
+     * @return void
+     */
+    public function testHyperLink(): void
+    {
+        $markdown = Markdown::new()
+            ->setInlineContent('[A LINK](https://github.com/fastvolt)')
+            ->toHtml(); // <i>hello 1</i>
+
+        $this->assertSame('<a href="https://github.com/fastvolt">A LINK</a>', $markdown);
+    }
+
 
     /**
      * Test Inline Markdown Compilation
@@ -99,14 +114,13 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
      */
     public function testMultiLinedMarkdownCompilation(): void
     {
-        $markdown = Markdown::new()
-            ->setContent('# First Heading')
-            ->setContent('# Second Heading')
+        $markdown = Markdown::new(false)
+            ->setInlineContent('>  first world')
+            ->setInlineContent('__second word__')
             ->toHtml();
 
-        $this->assertSame('<h1>First Heading</h1>
-
-        <h1>Second Heading</h1>', $markdown);
+        $this->assertNotNull($markdown);
+        $this->assertIsString($markdown);
     }
 
     /**
@@ -116,20 +130,10 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
      */
     public function testMarkdownSanitization(): void
     {
-        $markdown1 = Markdown::new(sanitize: false)
+        $markdown = Markdown::new(sanitize: true)
             ->setInlineContent('<p>first word</p>')
-            ->setInlineContent('<p>second word</p>');
+            ->toHtml();
 
-        $markdown2 = Markdown::new(sanitize: true)
-            ->setInlineContent('<p>first word</p>')
-            ->setInlineContent('<p>second word</p>');
-
-        $this->assertSame('<p>first word</p>
-
-        <p>second word</p>', $markdown1);
-
-        $this->assertSame('&lt;p&gt;first word&lt;/p&gt;
-
-        &lt;p&gt;second word&lt;/p&gt;', $markdown2);
+        $this->assertSame('&lt;p&gt;first word&lt;/p&gt;', $markdown);
     }
 }

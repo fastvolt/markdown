@@ -30,7 +30,7 @@
 
 ## 🚀 Installation
 
-```auto
+```sh
 composer require fastvolt/markdown
 ```
 
@@ -44,7 +44,7 @@ use FastVolt\Helper\Markdown;
 $text = "## Hello, World";
 
 // initialize markdown object
-$markdown = Markdown::new();
+$markdown = new Markdown(); // or Markdown::new()
 
 // set markdown content 
 $markdown->setContent($text);
