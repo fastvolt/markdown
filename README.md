@@ -12,8 +12,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/fastvolt/markdown/actions/workflows/php.yml">
-    <img src="https://github.com/fastvolt/markdown/actions/workflows/php.yml/badge.svg?branch=master" alt="PHP Composer" />
+  <a href="https://github.com/fastvolt/markdown/actions/workflows/validator1.yml">
+    <img src="https://github.com/fastvolt/markdown/actions/workflows/validator1.yml/badge.svg" alt="PHP Composer" />
   </a>
   <a href="#license">
     <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License: MIT">
