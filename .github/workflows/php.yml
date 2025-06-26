@@ -38,6 +38,10 @@ jobs:
     - name: Dump Autoload
       run: composer dump-autoload -o
 
+    - name: Run Test Suite
+      run: php ./vendor/bin/phpunit tests
+
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
