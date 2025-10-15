@@ -174,9 +174,9 @@ final class Markdown
     /**
      * Compile Markdown to Raw HTML Output
      *
-     * @return string|null|\LogicException
+     * @throws \LogicException
      */
-    public function toHtml(): \LogicException|string|null
+    public function toHtml(): ?string
     {
         if (!isset($this->contents) || count($this->contents) == 0) {
             throw new \LogicException(
