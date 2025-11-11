@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FastVolt\Helper\Libs\Markdown;
+namespace FastVolt\Helper\Markdown\Libs;
 
 class ParseMarkdown
 {

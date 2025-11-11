@@ -4,17 +4,25 @@ declare(strict_types=1);
 
 namespace FastVolt\Helper;
 
-use FastVolt\Helper\Libs\Markdown\ParseMarkdown;
+use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
+use FastVolt\Helper\Markdown\Libs\ParseMarkdown;
+use FastVolt\Helper\Markdown\Interface\MarkdownInterface;
+use FastVolt\Helper\Markdown\Exceptions\{
+    MarkdownException,
+    MarkdownFileNotFound
+};
 
-final class Markdown
+final class Markdown implements MarkdownInterface
 {
-    private array $contents;
+    private array $contents = [];
+    private ?string $readFromDir = null;
     private array $compileDir = [];
 
     public function __construct(
         # sanitize outputs
         protected bool $sanitize = true
-    ) {}
+    ) {
+    }
 
     /**
      * Initialize Markdown Parser
@@ -26,6 +34,17 @@ final class Markdown
     public static function new(bool $sanitize = true): self
     {
         return new self($sanitize);
+    }
+
+    /**
+     * Fetch/Read Markdown Files from a Source Directory and it's Child Directories
+     * @param string $directory_name
+     * @return Markdown
+     */
+    public function setSourceDirectory(string $directory_name): static
+    {
+        $this->readFromDir = $directory_name;
+        return $this;
     }
 
     /**
@@ -55,9 +74,9 @@ final class Markdown
     }
 
     /**
-     * Set Markdown File
+     * Set Markdown File (alias of `addFile` method)
      *
-     * @param string $file_name: Set File to read markdown content from e.g './markdowns/index.md'
+     * @param string $file_name: Set file to read markdown contents from e.g './markdowns/index.md'
      *
      * @return self
      */
@@ -68,50 +87,113 @@ final class Markdown
     }
 
     /**
+     * Add/Append Markdown File (alias of `setFile` method)
+     *
+     * @param string $file_name: Set file to read markdown contents from e.g './markdowns/index.md'
+     *
+     * @return self
+     */
+    public function addFile(string $file_name): static
+    {
+        $this->contents[]['file'] = $file_name;
+        return $this;
+    }
+
+    /**
+     * Add/Append Multiple Markdown Files
+     *
+     * @param array $file_names: Set files to read markdown contents from e.g './markdowns/index.md'
+     *
+     * @return self
+     */
+    public function addMultipleFiles(array $file_names): static
+    {
+        foreach ($file_names as $file) {
+            $this->contents[]['file'] = $file;
+        }
+
+        return $this;
+    }
+
+    /**
      * Set directory where compiled markdown files will be stored in html format
      *
      * @param string $directory directory where your compiled html files will be stored
      */
     public function setCompileDir(string $directory = './markdowns/'): static
     {
-        try { 
-            $compilationDir = !str_ends_with($directory, '/') 
-                ? "$directory/" 
+        $compilationDir = !str_ends_with($directory, '/')
+            ? "$directory/"
+            : $directory;
+
+        $this->compileDir[] = $compilationDir;
+
+        if (!is_dir($compilationDir)) {
+            if (mkdir($compilationDir, 0755, true) === false) {
+                throw new \RuntimeException("Failed to create compilation directory: $compilationDir");
+            }
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Set directory where compiled markdown files will be stored in html format
+     * 
+     * alias of `setCompileDir` method
+     *
+     * @param string $directory directory where your compiled html files will be stored
+     */
+    public function addOutputDirectory(string $directory = './markdowns/'): static
+    {
+        $this->setCompileDir($directory);
+        return $this;
+    }
+
+    /**
+     * Set Multiple Directories Where Compiled Markdown Files Will Be Stored In Html Format
+     *
+     * @param array $directories directory where your compiled html files will be stored
+     */
+    public function addMultipleOutputDirectories(array $directories = ['./markdowns/']): static
+    {
+        foreach ($directories as $directory) {
+            $compilationDir = !str_ends_with($directory, '/')
+                ? "$directory/"
                 : $directory;
     
-            $this->compileDir[] = $compilationDir; 
+            $this->compileDir[] = $compilationDir;
     
-            if (!is_dir($compilationDir)) {
-                if (mkdir($compilationDir, 0777)) {
-                    return $this;
+            if (! is_dir($compilationDir)) {
+                if (mkdir($compilationDir, 0755, true) === false) {
+                    throw new \RuntimeException("Failed to create compilation directory: $compilationDir");
                 }
             }
-            return $this;
-        } catch (\Exception|\TypeError|\Throwable $e) {
-            throw $e;
         }
+        
+        return $this;
     }
 
     /**
      * Read File Contents
      *
      * @param string $filename Input file name
-     *
-     * @return string|\Exception|null
+     * @throws \Exception
+     * @return string|null
      */
-    private function read_file(string $filename): string|\Exception|null
+    private function readFile(string $filename): string|null
     {
-        if (!file_exists($filename)) {
-            $filename = !str_starts_with($filename, '/')
-                ? "/{$filename}"
-                : $filename;
-
-            if (!file_exists($filename)) {
-                throw new \Exception("File Name or Directory ($filename) Does Not Exist!");
-            }
+        if (! file_exists($filename)) {
+            throw new MarkdownFileNotFound("File name or directory ($filename) does not exist!");
         }
 
-        return file_get_contents($filename);
+        $content = file_get_contents($filename);
+
+        if ($content === false) {
+            throw new MarkdownException("Could not read file ($filename).");
+        }
+
+        return $content;
     }
 
     /**
@@ -144,24 +226,24 @@ final class Markdown
 
     /**
      * Check if File Name is Valid
+     * 
+     * @throws \InvalidArgumentException
      */
-    private function validateFileName(string $name): \InvalidArgumentException|bool
+    private function validateFileName(string $name)
     {
         $validateType = preg_match('/(^\s+)/', $name);
 
         # check if file name is valid and acceptable
-        if ($validateType) {
+        if (empty(trim($name)) || $validateType) {
             throw new \InvalidArgumentException('File Name Must Be A Valid String!');
         }
-
-        return true;
     }
 
     /**
      * Add html extension to file name
-     *
+     * 
      * @param string $file_name replace default output filename
-     *
+     * 
      * @return ?string
      */
     private function addHtmlExtension(string $file_name): ?string
@@ -172,92 +254,224 @@ final class Markdown
     }
 
     /**
+     * Compiles all content from $this->contents into an array of HTML strings.
+     *
+     * @throws \LogicException
+     */
+    private function getCompiledHtmlArray(): array
+    {
+        if (empty($this->contents)) {
+            throw new \LogicException(
+                message: 'Set a Markdown Content or File Before Conversion!'
+            );
+        }
+
+        // we'll store all compiled html contents here
+        $html_contents = [];
+
+        foreach ($this->contents as $key => $single_content) {
+            $html_contents[] = match (array_key_first($single_content)) {
+                'inline' => $this->compileSingleLinedMarkdown($single_content['inline']),
+                'file' => $this->compileMultiLinedMarkdown($this->readFile($single_content['file'])),
+                default => $this->compileMultiLinedMarkdown($single_content['multi-line'])
+            };
+        }
+
+        return $html_contents;
+    }
+
+    /**
      * Compile Markdown to Raw HTML Output
      *
      * @throws \LogicException
      */
     public function toHtml(): ?string
     {
-        if (!isset($this->contents) || count($this->contents) == 0) {
-            throw new \LogicException(
-                message: 'Set a Markdown Content or File Before Conversion!'
-            );
-        }
-
-        // store all compiled html contents here
-        $html_contents = [];
-
-        foreach ($this->contents as $key => $single_content) {
-            $html_contents[] = match (array_key_first($single_content)) {
-                'inline' => $this->compileSingleLinedMarkdown($single_content['inline']),
-                'file' => $this->compileMultiLinedMarkdown($this->read_file($single_content['file'])),
-                default => $this->compileMultiLinedMarkdown($single_content['multi-line'])
-            };
-        };
-
-        return implode("\n\r", $html_contents);
+        $html_contents = $this->getCompiledHtmlArray();
+        return implode("\n", $html_contents);
     }
 
+    /**
+     * Compile Markdown to Raw HTML Output (Alias of `toHtml` Method)
+     *
+     * @throws \LogicException
+     */
+    public function getHtml(): ?string
+    {
+        $html_contents = $this->getCompiledHtmlArray();
+        return implode("\n", $html_contents);
+    }
 
     /**
      * Compile Markdown Contents to Html File
      *
-     * @param string $file_name: rename compiled html file
-     *
-     * @return bool|\LogicException
+     * @param string $file_name: name for the generated html file
+     * @throws \LogicException
+     * @return bool
      */
-    public function toHtmlFile(string $file_name = 'compiledmarkdown.html'): \LogicException|bool
+    public function toHtmlFile(string $file_name = 'index.html'): bool
     {
+        $file_name = basename($file_name);
+
         // validate file name
         $this->validateFileName($file_name);
 
         // check if compilation directories are set
-        if (!isset($this->compileDir) || count($this->compileDir) == 0) {
+        if (empty($this->compileDir)) {
             throw new \LogicException('Ensure To Set A Storage Directory For Your Compiled HTML File!');
         }
 
-        $html_contents = [];
+        // throws LogicException if no content is set
+        $html_contents = $this->getCompiledHtmlArray();
 
-        if (isset($this->contents) && count($this->contents) > 0) {
-            foreach ($this->contents as $key => $single_content) {
-                $html_contents[] = match (array_key_first($single_content)) {
-                    'inline' => $this->compileSingleLinedMarkdown($single_content['inline']),
-                    'file' => $this->compileMultiLinedMarkdown($this->read_file($single_content['file'])),
-                    default => $this->compileMultiLinedMarkdown($single_content['multi-line'])
-                };
-            };
+        // add extension to filename
+        $file_name = $this->addHtmlExtension($file_name);
 
-            # add extension to filename
-            $file_name = $this->addHtmlExtension($file_name);
-
-            // Compile The Markdown Contents to Single pr Multiple Directories
-            return $this->saveCompiledMarkdownFiles(
-                compileDirs: $this->compileDir,
-                file_name: $file_name,
-                contents: $html_contents
-            );
-        }
-        
-        throw new \LogicException('Set A Markdown File or Content to Compile!');
+        // Compile The Markdown Contents to Single or Multiple Directories
+        return $this->saveCompiledHtml(
+            compileDirs: $this->compileDir,
+            file_name: $file_name,
+            contents: $html_contents
+        );
     }
 
-    private function saveCompiledMarkdownFiles(array $compileDirs, string $file_name, array $contents): bool
+    /**
+     * Compile Markdown Contents to an Html File (Alias of `toHtmlFile` method)
+     *
+     * @param string $file_name: name for the generated html file
+     * @throws \LogicException
+     * @return bool
+     */
+    public function saveToHtmlFile(string $file_name = 'index.html'): bool
     {
-        if (count($compileDirs) > 0) {
-            foreach ($compileDirs as $single_directory) {
-                if (!is_dir($single_directory)) {
-                    throw new \RuntimeException("Failed To Locate ('{$single_directory}') Directory!");
-                }
+        return $this->toHtmlFile($file_name);
+    }
 
-                # write md to html file
-                if ($create_file = fopen("{$single_directory}{$file_name}", 'w+')) {
-                   fwrite($create_file, implode("\n\r", $contents));
-                   fclose($create_file);
-                   continue;
-                }
-            }
-            return true;
+    /**
+     * Runs the main conversion process.
+     * 
+     * @param MarkdownEnum $as run conversion as MarkdownEnum::TO_HTML, MarkdownEnum::TO_HTML_FILE, MarkdownEnum::TO_HTML_DIRECTORY
+     * @param mixed $fileName name for the generated html file (only used for MarkdownEnum::TO_HTML_FILE option)
+     * @return bool|string|null
+     */
+    public function run(MarkdownEnum $as, ?string $fileName = 'index.html'): mixed
+    {
+        return match ($as) {
+            MarkdownEnum::TO_HTML_FILE => $this->toHtmlFile($fileName),
+            MarkdownEnum::TO_HTML_DIRECTORY => $this->convertDirectoryToHtml(),
+            default => $this->toHtml()
+        };
+    }
+
+    /**
+     * Start Directory to HTML Compilation
+     * @throws \RuntimeException
+     * @return bool
+     */
+    private function convertDirectoryToHtml(): bool
+    {
+        // Simplified and Corrected Check for Source Directory
+        if ($this->readFromDir === null) {
+            throw new \RuntimeException('Source directory not set. Use setSourceDirectory() before converting a directory.');
         }
-        return false;
+    
+        // Simplified Check for Compile Directory
+        if (empty($this->compileDir)) { 
+            throw new \RuntimeException('Output directory not set. Use setCompileDir() or setOutputDirectory() before converting a directory.');
+        }
+
+        // Normalize Paths
+        $read_from = rtrim($this->readFromDir, '/\\');
+        $compile_to = array_map(function (string $item) {
+            return rtrim($item, '/\\');
+        }, $this->compileDir);
+
+        // remove directory dots
+        $directory = new \RecursiveDirectoryIterator(
+            directory: $read_from,
+            flags: \RecursiveDirectoryIterator::SKIP_DOTS
+        );
+
+        // iterate over directories (with priorities)
+        $iterator = new \RecursiveIteratorIterator(
+            iterator: $directory,
+            mode: \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        // Filter to find only files ending in .md
+        $regex = new \RegexIterator(
+            iterator: $iterator,
+            pattern: '/^.*\.md$/i',
+            mode: \RegexIterator::GET_MATCH
+        );
+
+        foreach ($regex as $file) {
+            $this->convertSingleDirectoryFile(
+                filePath: $file[0], // $file[0] is the full file path
+                readFrom: $read_from,
+                compileTo: $compile_to
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Convert Each Single File in Directory to HTML
+     */
+    private function convertSingleDirectoryFile(string $filePath, string $readFrom, array $compileTo): void
+    {
+        // 1. Calculate new paths
+        // e.g "subdir/my-post.md"
+        $MarkdownFilePath = substr($filePath, strlen($readFrom) + 1);
+
+        // format what the html file will look like
+        // e.g "html_output/subdir/my-post.html"
+        $HTMLFilePath = preg_replace('/\.md$/i', '.html', $MarkdownFilePath);
+
+        foreach ($compileTo as $singleDirectory) {
+            // 2. Create the output directory if it doesn't exist
+            $htmlOutputPath = $singleDirectory . '/' . $HTMLFilePath;
+            $htmlOutputDir = dirname($htmlOutputPath);
+
+            if (!is_dir($htmlOutputDir)) {
+                mkdir($htmlOutputDir, 0755, true);
+            }
+
+            // 3. Read, convert, and save
+            $markdownContent = file_get_contents($filePath);
+            $htmlContents = $this->compileMultiLinedMarkdown($markdownContent);
+
+            file_put_contents($htmlOutputPath, $htmlContents);
+        }
+    }
+
+    /**
+     * Save Compiled Markdown Files to Specified Directory
+     * @throws \RuntimeException
+     * @return bool
+     */
+    private function saveCompiledHtml(array $compileDirs, string $file_name, array $contents): bool
+    {
+        if (empty($compileDirs)) {
+            return false;
+        }
+
+        $html_string = implode("\n", $contents);
+        $all_successful = true;
+
+        foreach ($compileDirs as $single_directory) {
+            if (!is_dir($single_directory)) {
+                throw new \RuntimeException("Failed To Locate ('{$single_directory}') Directory!");
+            }
+
+            $full_path = $single_directory . $file_name;
+
+            if (file_put_contents($full_path, $html_string) === false) {
+                $all_successful = false; // Mark failure but continue trying other directories
+            }
+        }
+
+        return $all_successful;
     }
 }

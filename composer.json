@@ -11,7 +11,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "FastVolt\\Helper\\": "src/"
+            "FastVolt\\Helper\\": "src/",
+            "FastVolt\\Helper\\Markdown\\": "src/Markdown/"
         }
     },
     "authors": [

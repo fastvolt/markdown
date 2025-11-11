@@ -43,14 +43,15 @@ use FastVolt\Helper\Markdown;
 
 $text = "## Hello, World";
 
-// initialize markdown object
-$markdown = new Markdown(); // or Markdown::new()
+// Initialize the parser using the preferred factory method.
+// Alias: Markdown::new()
+$markdown = new Markdown(); 
 
 // set markdown content 
 $markdown->setContent($text);
 
-// compile as raw HTML
-echo $markdown->toHtml();
+// compile as raw HTML (Alias: ->toHtml())
+echo $markdown->getHtml();
 ```
 
 #### Output:
@@ -87,7 +88,7 @@ echo $markdown->toHtml();
 $markdown = Markdown::new();
 
 // set markdown file to parse 
-$markdown->setFile('./sample.md');
+$markdown->addFile('./sample.md');
 
 // compile as raw HTML
 echo $markdown->toHtml();
@@ -124,14 +125,14 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 
 $markdown = Markdown::new()
     // set markdown file
-    ->setFile(__DIR__ . '/blogPost.md')
-    // set compilation directory 
-    ->setCompileDir(__DIR__ . '/pages/')
-    // compile as an html file 'newHTMLFile.html'
-    ->toHtmlFile(filename: 'newHTMLFile');
+    ->addFile(__DIR__ . '/blogPost.md')
+    // set compilation directory (Alias ->setCompileDir())
+    ->addOutputDirectory(__DIR__ . '/pages/')
+    // compile as an html file (Alias: ->toHtmlFile())
+    ->saveToHtmlFile(filename: 'index.html');
 
 if ($markdown) {
-  echo "Compiled to ./pages/newHTMLFile.html";
+  echo "Compiled to ./pages/index.html";
 }
 
 ```
@@ -149,7 +150,7 @@ $markdown = Markdown::new(
 
 $markdown->setContent('<h1>Hello World</h1>');
 
-echo $markdown->toHtml();
+echo $markdown->getHtml(); // Alias: ->toHtml()
 ```
 
 > ***Output:***
@@ -168,7 +169,7 @@ $markdown = Markdown::new();
 
 $markdown->setInlineContent('_My name is **vincent**, the co-author of this blog_');
 
-echo $markdown->toHtml();
+echo $markdown->getHtml();
 ```
 
 > ***Output:***
@@ -200,7 +201,7 @@ Combine multiple markdown files, contents and compile them in multiple directori
 ```php
 $markdown = Markdown::new(sanitize: true)
     // include header file's markdown contents
-    ->setFile('./Header.md')
+    ->addFile('./Header.md')
     // body contents
     ->setInlineContent('_My name is **vincent**, the co-author of this blog_')
     ->setContent('Kindly follow me on my GitHub page via: [@vincent](https://github.com/oladoyinbov).')
@@ -211,17 +212,20 @@ $markdown = Markdown::new(sanitize: true)
   + Fastvolt Router
   + Markdown Parser.
     ')
-    // include footer file's markdown contents
-    ->setFile('./Footer.md')
-    // set compilation directory 
-    ->setCompileDir('./pages/')
-    // set another compilation directory to backup the result
-    ->setCompileDir('./backup/pages/')
-    // compile and store as 'homepage.html'
-    ->toHtmlFile(file_name: 'homepage');
+    // Include footer file's markdown contents
+    ->addFile('./Footer.md')
+    
+    // Set compilation directory (Alias: ->setCompileDir())
+    ->addOutputDirectory('./pages/')
+    
+    // Set another compilation directory to backup the result
+    ->addOutputDirectory('./backup/pages/')
+
+    // Compile and store as 'index.html'
+    ->saveToHtmlFile(file_name: 'index.html');
 
 if ($markdown) {
-   echo "Compile Successful";
+  echo "Compile Successful. Files created in /pages/ and /backup/pages/";
 }
 ```
 
@@ -243,6 +247,33 @@ if ($markdown) {
   </li>
 </ul>
 <h3>Thanks for Visiting My BlogPage</h3>
+```
+
+<br>
+
+## Convert Directory to HTML Directory Structure
+
+This compiles all `.md` files in a source directory into a mirrored structure of `.html` files in an output directory.
+
+```php
+use FastVolt\Helper\Markdown;
+use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
+
+$markdown = Markdown::create()
+    // Set the source directory to read all .md files from (including sub-directories)
+    ->setSourceDirectory(__DIR__ . '/docs/')
+    
+    // Set the output directory to compile the mirrored HTML structure to (Alias: ->setCompileDir())
+    ->addOutputDirectory(__DIR__ . '/public/')
+    
+    // Run the directory conversion process
+    ->run(MarkdownEnum::TO_HTML_DIRECTORY);
+
+if ($markdown) {
+    echo "Directory conversion successful!";
+}
+
+// If '/docs/guide/*.md' exists, it creates '/public/guide/*.html'.
 ```
 
 <br>

@@ -1,2 +1,5 @@
 /composer.lock
 /vendor
+/index.php
+/phpunit.xml export-ignore
+/tests export-ignore
