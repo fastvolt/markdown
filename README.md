@@ -62,6 +62,25 @@ echo $markdown->getHtml();
 
 <br>
 
+## 🧠 Interface Method Reference
+
+The parser uses a fluent (chainable) API. This is your command cheatsheet for configuration and execution:
+
+| Method Name | Return Type | Description |
+| :--- | :--- | :--- |
+| `::new(bool $sanitize = true)` | `self` | **Initialize** the parser instance. The preferred static factory method. |
+| `->setSourceDirectory(string $name)` | `static` | Sets the **input root directory** for whole-directory compilation. |
+| `->setContent(string $content)` | `static` | Adds **multi-line** Markdown content (supports lists, headings, etc.) to the queue. |
+| `->setInlineContent(string $content)` | `static` | Adds **single-line** Markdown content (*bold*, **italic**) to the queue. |
+| `->addFile(string $fileName)` | `static` | Adds a single Markdown file path to the compilation queue. *(Alias: `->setFile()`)* |
+| `->addMultipleFiles(array $names)` | `static` | Adds an array of Markdown file paths to the compilation queue. |
+| `->addOutputDirectory(string $dir)` | `static` | Adds a directory where the compiled HTML will be saved. Allows multiple targets. *(Alias: `->setCompileDir()`)* |
+| `->addMultipleOutputDirectories(array $dirs)` | `static` | Adds an array of directories where the compiled HTML will be saved. |
+| `->getHtml()` | `string\|null` | **Execute** compilation and return the raw HTML string. *(Alias: `->toHtml()`)* |
+| `->saveToHtmlFile(string $name)` | `bool` | **Execute** compilation and write the output to the specified HTML file(s). *(Alias: `->toHtmlFile()`)* |
+| `->run(MarkdownEnum $as, ?string $file)` | `mixed` | Universal command to execute conversion based on the specified `MarkdownEnum` target. |
+
+<br>
 
 ## 📄 Convert Markdown File to Raw HTML
 
@@ -90,8 +109,8 @@ $markdown = Markdown::new();
 // set markdown file to parse 
 $markdown->addFile('./sample.md');
 
-// compile as raw HTML
-echo $markdown->toHtml();
+// compile as raw HTML (Alias: ->toHtml())
+echo $markdown->getHtml();
 ```
 
 > ***Output:***
@@ -126,8 +145,10 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 $markdown = Markdown::new()
     // set markdown file
     ->addFile(__DIR__ . '/blogPost.md')
+
     // set compilation directory (Alias ->setCompileDir())
     ->addOutputDirectory(__DIR__ . '/pages/')
+
     // compile as an html file (Alias: ->toHtmlFile())
     ->saveToHtmlFile(filename: 'index.html');
 
@@ -148,6 +169,7 @@ $markdown = Markdown::new(
    sanitize: true
 );
 
+// raw html tag as markdown content
 $markdown->setContent('<h1>Hello World</h1>');
 
 echo $markdown->getHtml(); // Alias: ->toHtml()
@@ -229,7 +251,7 @@ if ($markdown) {
 }
 ```
 
-> ***Output:*** `pages/homepage.html`, `backup/pages/homepage.html`
+> ***Output:*** `pages/index.html`, `backup/pages/index.html`
 
 ```html
 <h1>Blog Title</h1>
@@ -275,6 +297,15 @@ if ($markdown) {
 
 // If '/docs/guide/*.md' exists, it creates '/public/guide/*.html'.
 ```
+
+<br>
+
+## Error Handling
+The parser uses custom exceptions for clarity:
+
+-[] MarkdownFileNotFound: Thrown when a file specified in addFile() or a directory in setSourceDirectory() does not exist.
+-[] LogicException: Thrown if you try to execute a conversion (getHtml() or saveToHtmlFile()) before any content (setContent, addFile, etc.) has been added to the queue.
+-[] \RuntimeException: Thrown if the system fails to create an output directory (mkdir fails) or if a required directory is missing during run() execution.
 
 <br>
 
