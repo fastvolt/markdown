@@ -38,6 +38,7 @@ final class Markdown implements MarkdownInterface
 
     /**
      * Fetch/Read Markdown Files from a Source Directory and it's Child Directories
+     * 
      * @param string $directory_name
      * @return Markdown
      */
@@ -87,7 +88,9 @@ final class Markdown implements MarkdownInterface
     }
 
     /**
-     * Add/Append Markdown File (alias of `setFile` method)
+     * Add/Append Markdown File
+     * 
+     *  - Alias of `setFile` method
      *
      * @param string $file_name: Set file to read markdown contents from e.g './markdowns/index.md'
      *
@@ -117,6 +120,8 @@ final class Markdown implements MarkdownInterface
 
     /**
      * Set directory where compiled markdown files will be stored in html format
+     * 
+     *  - Alias of `addOutputDirectory` method
      *
      * @param string $directory directory where your compiled html files will be stored
      */
@@ -140,7 +145,7 @@ final class Markdown implements MarkdownInterface
     /**
      * Set directory where compiled markdown files will be stored in html format
      * 
-     * alias of `setCompileDir` method
+     * - Alias of `setCompileDir` method
      *
      * @param string $directory directory where your compiled html files will be stored
      */
@@ -282,7 +287,9 @@ final class Markdown implements MarkdownInterface
 
     /**
      * Compile Markdown to Raw HTML Output
-     *
+     * 
+     * - Alias: `getHtml()`
+     * 
      * @throws \LogicException
      */
     public function toHtml(): ?string
@@ -292,7 +299,9 @@ final class Markdown implements MarkdownInterface
     }
 
     /**
-     * Compile Markdown to Raw HTML Output (Alias of `toHtml` Method)
+     * Compile Markdown to Raw HTML Output
+     * 
+     * - Alias: `toHtml()`
      *
      * @throws \LogicException
      */
@@ -304,6 +313,8 @@ final class Markdown implements MarkdownInterface
 
     /**
      * Compile Markdown Contents to Html File
+     * 
+     * - Alias: `saveToHtmlFile()`
      *
      * @param string $file_name: name for the generated html file
      * @throws \LogicException
@@ -318,7 +329,7 @@ final class Markdown implements MarkdownInterface
 
         // check if compilation directories are set
         if (empty($this->compileDir)) {
-            throw new \LogicException('Ensure To Set A Storage Directory For Your Compiled HTML File!');
+            throw new \LogicException('Output directory not set. Use the setCompileDir() or setOutputDirectory() method before conversion process.');
         }
 
         // throws LogicException if no content is set
@@ -336,7 +347,9 @@ final class Markdown implements MarkdownInterface
     }
 
     /**
-     * Compile Markdown Contents to an Html File (Alias of `toHtmlFile` method)
+     * Compile Markdown Contents to an Html File
+     * 
+     * - Alias: `toHtmlFile()`
      *
      * @param string $file_name: name for the generated html file
      * @throws \LogicException

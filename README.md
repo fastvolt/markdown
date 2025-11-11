@@ -160,25 +160,123 @@ if ($markdown) {
 
 <br>
 
+## Convert Directory to HTML Directory Structure
+
+This compiles all `.md` files in a source directory into a mirrored structure of `.html` files in an output directory.
+
+```php
+use FastVolt\Helper\Markdown;
+use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
+
+$markdown = Markdown::create()
+    // Set the source directory to read all .md files from (including sub-directories)
+    ->setSourceDirectory(__DIR__ . '/docs/')
+    
+    // Set the output directory to compile the mirrored HTML structure to (Alias: ->setCompileDir())
+    ->addOutputDirectory(__DIR__ . '/public/')
+    
+    // Run the directory conversion process
+    ->run(MarkdownEnum::TO_HTML_DIRECTORY);
+
+if ($markdown) {
+    echo "Directory conversion successful!";
+}
+
+// If '/docs/guide/*.md' exists, it creates '/public/guide/*.html'.
+```
+
+<br>
+
+## Single Point Execution
+
+This is the universal executor that can operate in three different modes using the `MarkdownEnum` enum and the `run` method.
+
+```php
+  run(MarkdownEnum $as, ?string $fileName): mixed
+```
+
+### MarkdownEnum Interface
+
+```php
+enum MarkdownEnum 
+{
+  // convert markdown source to raw html (raw/file => raw html)
+  case TO_HTML;
+
+  // convert markdown source to an html file (markdown raw/file => html file)
+  case TO_HTML_FILE;
+
+  // convert markdown source directory to html directory (markdown directory => html directory)
+  case TO_HTML_DIRECTORY;
+}
+```
+
+<br>
+
+### Usage Examples
+
+#### Using The `MarkdownEnum::TO_HTML` Enum
+This is an alternative way to call `getHtml()`.
+
+```php
+Markdown::new()
+    ->setContent('# Heading 1')
+    ->run(MarkdownEnum::TO_HTML);
+```
+
+#### Using The `MarkdownEnum::TO_HTML_FILE` Enum
+This is an alternative way to call `saveToHtmlFile()`.
+
+```php
+Markdown::new()
+    ->addOutputDirectory(__DIR__ . '/build')
+    ->run(MarkdownEnum::TO_HTML_FILE, 'index.html');
+```
+
+#### Using The `MarkdownEnum::TO_HTML_DIRECTORY` Enum
+This is the only method that uses `setSourceDirectory()`. It crawls the source directory, converts all .md files, and saves them (preserving the folder structure) to the output directory.
+
+```php
+Markdown::new()
+    ->setSourceDirectory(__DIR__ . '/src/my-docs')
+    ->addOutputDirectory(__DIR__ . '/public/docs')
+    ->run(MarkdownEnum::TO_HTML_DIRECTORY);
+```
+
+<br>
+
 ## 🔒 Sanitizing HTML Output (XSS Protection)
 
-You can sanitize input HTML and prevent cross-site scripting (XSS) attack using the `sanitize` flag:
+You can sanitize input HTML and prevent cross-site scripting (XSS) attack using the `sanitize` flag.
+
+> `$sanitize`: Set to `true` (default) to escape HTML tags in the Markdown. Set to `false` only if you completely trust the source of your Markdown and need raw HTML to be rendered.
 
 ```php
 $markdown = Markdown::new(
-   sanitize: true
+  sanitize: true
 );
 
-// raw html tag as markdown content
-$markdown->setContent('<h1>Hello World</h1>');
+$markdown_unsafe = Markdown::new(
+  sanitize: false
+);
 
-echo $markdown->getHtml(); // Alias: ->toHtml()
+$content = '<h1>Hello World</h1>';
+
+echo $markdown
+  ->setContent($content)
+  ->getHtml();
+
+echo $markdown_unsafe
+  ->setContent($content)
+  ->getHtml();
 ```
 
 > ***Output:***
 
 ```html
-<p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
+Sanitize Enabled: <p>&lt;h1&gt;Hello World&lt;/h1&gt;</p>
+
+Sanitize Disabled: <h1>Hello World</h1>
 ```
 
 <br>
@@ -235,13 +333,13 @@ $markdown = Markdown::new(sanitize: true)
   + Markdown Parser.
     ')
     // Include footer file's markdown contents
-    ->addFile('./Footer.md')
+    ->addFile(__DIR__ . '/Footer.md')
     
-    // Set compilation directory (Alias: ->setCompileDir())
-    ->addOutputDirectory('./pages/')
+    // Add the main compilation directory 
+    ->addOutputDirectory(__DIR__ . '/pages/')
     
-    // Set another compilation directory to backup the result
-    ->addOutputDirectory('./backup/pages/')
+    // Add another compilation directory to backup the result
+    ->addOutputDirectory(__DIR__ . '/backup/pages/')
 
     // Compile and store as 'index.html'
     ->saveToHtmlFile(file_name: 'index.html');
@@ -269,33 +367,6 @@ if ($markdown) {
   </li>
 </ul>
 <h3>Thanks for Visiting My BlogPage</h3>
-```
-
-<br>
-
-## Convert Directory to HTML Directory Structure
-
-This compiles all `.md` files in a source directory into a mirrored structure of `.html` files in an output directory.
-
-```php
-use FastVolt\Helper\Markdown;
-use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
-
-$markdown = Markdown::create()
-    // Set the source directory to read all .md files from (including sub-directories)
-    ->setSourceDirectory(__DIR__ . '/docs/')
-    
-    // Set the output directory to compile the mirrored HTML structure to (Alias: ->setCompileDir())
-    ->addOutputDirectory(__DIR__ . '/public/')
-    
-    // Run the directory conversion process
-    ->run(MarkdownEnum::TO_HTML_DIRECTORY);
-
-if ($markdown) {
-    echo "Directory conversion successful!";
-}
-
-// If '/docs/guide/*.md' exists, it creates '/public/guide/*.html'.
 ```
 
 <br>
