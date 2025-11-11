@@ -314,16 +314,16 @@ $markdown = Markdown::new(sanitize: true)
   + Fastvolt Router
   + Markdown Parser.
     ')
-    // Include footer file's markdown contents
+    // include footer file's markdown contents
     ->addFile(__DIR__ . '/Footer.md')
     
-    // Add the main compilation directory 
+    // add the main compilation directory 
     ->addOutputDirectory(__DIR__ . '/pages/')
     
-    // Add another compilation directory to backup the result
+    // add another compilation directory to backup the result
     ->addOutputDirectory(__DIR__ . '/backup/pages/')
 
-    // Compile and store as 'index.html'
+    // compile and store as 'index.html'
     ->saveToHtmlFile(file_name: 'index.html');
 
 if ($markdown) {
