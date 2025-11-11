@@ -14,18 +14,4 @@ enum MarkdownEnum
 
     // convert markdown source directory to html directory (markdown directory => html directory)
     case TO_HTML_DIRECTORY;
-
-    /**
-     * Validate Enum Value
-     * 
-     * @return void
-     */
-    public static function validateEnum(MarkdownEnum $enumValue)
-    {
-        if (! self::tryFrom($enumValue)) {
-            throw new MarkdownEnumNotFound(
-                message: 'Specified Markdown Enum Doesn\'t Exist!'
-            );
-        }
-    }
 }
