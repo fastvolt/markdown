@@ -86,10 +86,10 @@ echo $markdown->getHtml();
 ```php
 $markdown = Markdown::new();
 
-// set markdown file to parse 
-$markdown->addFile('./sample.md');
+// add markdown file to parse 
+$markdown->addFile(__DIR__ . '/sample.md');
 
-// compile as raw HTML (Alias: ->toHtml())
+// get as raw html
 echo $markdown->getHtml();
 ```
 
@@ -123,7 +123,7 @@ Here is a Markdown File Waiting To Be Compiled To an HTML File
 ```php
 
 $markdown = Markdown::new()
-    // set markdown file
+    // add markdown file
     ->addFile(__DIR__ . '/blogPost.md')
 
     // set compilation directory (Alias ->setCompileDir())
