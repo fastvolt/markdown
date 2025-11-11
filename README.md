@@ -43,14 +43,13 @@ use FastVolt\Helper\Markdown;
 
 $text = "## Hello, World";
 
-// Initialize the parser using the preferred factory method.
-// Alias: Markdown::new()
-$markdown = new Markdown(); 
+// Initialize the parser
+$markdown = new Markdown(); // or Markdown::new()
 
 // set markdown content 
 $markdown->setContent($text);
 
-// compile as raw HTML (Alias: ->toHtml())
+// compile and get as raw HTML
 echo $markdown->getHtml();
 ```
 
@@ -89,7 +88,7 @@ $markdown = Markdown::new();
 // add markdown file to parse 
 $markdown->addFile(__DIR__ . '/sample.md');
 
-// get as raw html
+// compile and get as raw html
 echo $markdown->getHtml();
 ```
 
@@ -126,10 +125,10 @@ $markdown = Markdown::new()
     // add markdown file
     ->addFile(__DIR__ . '/blogPost.md')
 
-    // set compilation directory (Alias ->setCompileDir())
+    // add output directory
     ->addOutputDirectory(__DIR__ . '/pages/')
 
-    // compile as an html file (Alias: ->toHtmlFile())
+    // compile as an html file
     ->saveToHtmlFile(filename: 'index.html');
 
 if ($markdown) {
@@ -169,10 +168,15 @@ if ($markdown) {
 
 ## Single Point Execution
 
-This is the universal executor that can operate in three different modes using the `MarkdownEnum` enum and the `run` method.
+This is the universal executor that can operate in three different modes using the `MarkdownEnum` enum and `run` method.
+
+### Interface
 
 ```php
-  run(MarkdownEnum $as, ?string $fileName): mixed
+  run(
+    MarkdownEnum $as, 
+    ?string $fileName
+  ): mixed;
 ```
 
 ### MarkdownEnum Interface
@@ -191,12 +195,10 @@ enum MarkdownEnum
 }
 ```
 
-<br>
-
 ### Usage Examples
 
 #### Using The `MarkdownEnum::TO_HTML` Enum
-This is an alternative way to call `getHtml()`.
+> This is an alternative way to call `getHtml()`.
 
 ```php
 Markdown::new()
@@ -205,7 +207,7 @@ Markdown::new()
 ```
 
 #### Using The `MarkdownEnum::TO_HTML_FILE` Enum
-This is an alternative way to call `saveToHtmlFile()`.
+> This is an alternative way to call `saveToHtmlFile()`.
 
 ```php
 Markdown::new()
@@ -214,7 +216,7 @@ Markdown::new()
 ```
 
 #### Using The `MarkdownEnum::TO_HTML_DIRECTORY` Enum
-This is the only method that uses `setSourceDirectory()`. It crawls the source directory, converts all .md files, and saves them (preserving the folder structure) to the output directory.
+> This is the only method that uses `setSourceDirectory()`. It crawls the source directory, converts all .md files, and saves them (preserving the folder structure) to the output directory.
 
 ```php
 Markdown::new()
@@ -354,9 +356,9 @@ if ($markdown) {
 ## Error Handling
 The parser uses custom exceptions for clarity:
 
--[] MarkdownFileNotFound: Thrown when a file specified in addFile() or a directory in setSourceDirectory() does not exist.
--[] LogicException: Thrown if you try to execute a conversion (getHtml() or saveToHtmlFile()) before any content (setContent, addFile, etc.) has been added to the queue.
--[] \RuntimeException: Thrown if the system fails to create an output directory (mkdir fails) or if a required directory is missing during run() execution.
+- `MarkdownFileNotFound`: Thrown when a file specified in `addFile()` or a directory in `setSourceDirectory()` does not exist.
+- `LogicException`: Thrown if you try to execute a conversion (`getHtml()` or `saveToHtmlFile()`) before any content (setContent, addFile, etc.) has been added to the queue.
+- `RuntimeException`: Thrown if the system fails to create an output directory (mkdir fails) or if a required directory is missing during run() execution.
 
 <br>
 
