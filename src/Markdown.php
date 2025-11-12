@@ -378,7 +378,7 @@ final class Markdown implements MarkdownInterface
 
     /**
      * Start Directory to HTML Compilation
-     * @throws \RuntimeException
+     * @throws \RuntimeException|MarkdownFileNotFound
      * @return bool
      */
     private function convertDirectoryToHtml(): bool
@@ -391,6 +391,10 @@ final class Markdown implements MarkdownInterface
         // Simplified Check for Compile Directory
         if (empty($this->compileDir)) { 
             throw new \RuntimeException('Output directory not set. Use setCompileDir() or setOutputDirectory() before converting a directory.');
+        }
+
+        if (! is_dir($this->readFromDir)) {
+            throw new MarkdownFileNotFound('"' . $this->readFromDir . '" file path doesn\'t exist!');
         }
 
         // Normalize Paths
