@@ -147,7 +147,7 @@ This compiles all `.md` files in a source directory into a mirrored structure of
 use FastVolt\Helper\Markdown;
 use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
 
-$markdown = Markdown::create()
+$markdown = Markdown::new()
     // Set the source directory to read all .md files from (including sub-directories)
     ->setSourceDirectory(__DIR__ . '/docs/')
     
