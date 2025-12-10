@@ -594,6 +594,10 @@ class ParseMarkdown
                 return null;
             }
 
+            if ($Line['text'][$level] !== ' ') {
+                return null;
+            }
+
             $text = trim($Line['text'], '# ');
 
             $markdownBlock = array(
