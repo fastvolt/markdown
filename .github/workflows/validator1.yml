@@ -2,7 +2,6 @@ name: PHP Composer
 
 on:
   push:
-    branches: [ "v0.3.0" ]
   pull_request:
     branches: [ "v0.3.0" ]
 
@@ -13,9 +12,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -36,4 +43,5 @@ jobs:
       run: composer dump-autoload -o
 
     - name: Run Test Suite
+
       run: php ./vendor/bin/phpunit tests
