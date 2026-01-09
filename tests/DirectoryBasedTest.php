@@ -5,7 +5,7 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use FastVolt\Helper\Markdown;
-use Fastvolt\Helper\Markdown\Enums\MarkdownEnum;
+use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
 
 class DirectoryBasedTest extends \PHPUnit\Framework\TestCase
 {

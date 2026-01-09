@@ -1,8 +1,8 @@
 <?php
 
-namespace Fastvolt\Helper\Markdown\Enums;
+namespace FastVolt\Helper\Markdown\Enums;
 
-use Fastvolt\Helper\Markdown\Exceptions\MarkdownEnumNotFound;
+use FastVolt\Helper\Markdown\Exceptions\MarkdownEnumNotFound;
 
 enum MarkdownEnum 
 {
