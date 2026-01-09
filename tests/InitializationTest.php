@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use FastVolt\Helper\Markdown;
+use PHPUnit\Framework\TestCase;
 
-class InitializationTest extends \PHPUnit\Framework\TestCase
+class InitializationTest extends TestCase
 {
     public function testInitializationAndFluency(): void
     {

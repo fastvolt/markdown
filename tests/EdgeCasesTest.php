@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use FastVolt\Helper\Markdown;
-use Fastvolt\Helper\Markdown\Exceptions\MarkdownFileNotFound;
-use Fastvolt\Helper\Markdown\Enums\MarkdownEnum;
+use FastVolt\Helper\Markdown\Exceptions\MarkdownFileNotFound;
+use PHPUnit\Framework\TestCase;
 
-class EdgeCasesTest extends \PHPUnit\Framework\TestCase
+class EdgeCasesTest extends TestCase
 {
     public function testThrowsExceptionOnMissingInputFile(): void
     {

@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use FastVolt\Helper\Markdown;
+use PHPUnit\Framework\TestCase;
 
-class MarkupTest extends \PHPUnit\Framework\TestCase
+class MarkupTest extends TestCase
 {
     /**
      * Heading Test 1: <h1>
-     * 
+     *
      * @return void
      */
     public function testHeading1(): void
@@ -24,7 +23,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Heading Test 2: <h2>
-     * 
+     *
      * @return void
      */
     public function testHeading2(): void
@@ -38,7 +37,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Heading Test 3: <h3>
-     * 
+     *
      * @return void
      */
     public function testHeading3(): void
@@ -52,7 +51,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Heading Test 4: <h4>
-     * 
+     *
      * @return void
      */
     public function testHeading4(): void
@@ -66,7 +65,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test Italic 1: <i>
-     * 
+     *
      * @return void
      */
     public function testItalic(): void
@@ -80,7 +79,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test Link 1: <a>
-     * 
+     *
      * @return void
      */
     public function testHyperLink(): void
@@ -95,7 +94,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test Inline Markdown Compilation
-     * 
+     *
      * @return void
      */
     public function testInlineMarkdownCompilation(): void
@@ -109,7 +108,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test Multi-lined Markdown Compilation
-     * 
+     *
      * @return void
      */
     public function testMultiLinedMarkdownCompilation(): void
@@ -125,7 +124,7 @@ class MarkupTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Test Markdown Compilation With Sanitization Off
-     * 
+     *
      * @return void
      */
     public function testMarkdownSanitization(): void

@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use FastVolt\Helper\Markdown;
-use Fastvolt\Helper\Markdown\Enums\MarkdownEnum;
+use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
+use PHPUnit\Framework\TestCase;
 
-class CompilationTest extends \PHPUnit\Framework\TestCase
+class CompilationTest extends TestCase
 {
   /**
-   * Test Markdown to Html Conversion
-   * 
+   * Test Markdown to HTML Conversion.
+   *
    * @return void
    */
   public function testMdtoHtml(): void
@@ -25,7 +24,7 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
 
   /**
    * Test Markdown Compilation
-   * 
+   *
    * @return void
    */
   public function testMarkdownCompilation(): void
@@ -48,7 +47,7 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
     $markdown->setContent("## Heading 2");
 
     $markdown->setContent("## Title\n* List Item");
-                                     
+
     // Inline content
     $markdown->setInlineContent('This is **bold**');
 
@@ -107,7 +106,7 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
   public function testFileSavingThrowsExceptionIfNoOutputDirSet(): void
   {
     $this->expectException(\LogicException::class);
-    $this->expectExceptionMessage('Ensure To Set A Storage Directory');
+    $this->expectExceptionMessage('Output directory not set. Use the setCompileDir() or setOutputDirectory() method before conversion process.');
 
     Markdown::new()
       ->setContent('a')
@@ -116,7 +115,7 @@ class CompilationTest extends \PHPUnit\Framework\TestCase
 
   /**
    * Test Markdown Compilation
-   * 
+   *
    * @return void
    */
   public function testMarkdownAdvancedCompilation(): void
