@@ -23,6 +23,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
+        tools: composer, phpunit
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
@@ -43,5 +44,4 @@ jobs:
       run: composer dump-autoload -o
 
     - name: Run Test Suite
-
       run: php ./vendor/bin/phpunit tests
