@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use FastVolt\Helper\Markdown;
 use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
 use PHPUnit\Framework\TestCase;
