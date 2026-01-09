@@ -6,8 +6,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use FastVolt\Helper\Markdown;
 use FastVolt\Helper\Markdown\Enums\MarkdownEnum;
+use PHPUnit\Framework\TestCase;
 
-class DirectoryBasedTest extends \PHPUnit\Framework\TestCase
+class DirectoryBasedTest extends TestCase
 {
     public function testDirectoryToHtmlConversion(): void
     {
