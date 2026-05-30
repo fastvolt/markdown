@@ -399,7 +399,7 @@ The parser uses a fluent (chainable) API. This is your command cheatsheet for co
 | `> blockquote`              | Blockquote                  | `> This is a quote`                      | <blockquote>This is a quote</blockquote> |
 | `---`, `***`, `___`         | Horizontal Rule             | `---`                                     | `<hr>`                                |
 | `![alt](image.jpg)`         | Image                       | `![Logo](logo.png)`                      | `<img src="logo.png" alt="Logo">`     |
-| `\`                         | Escape special character    | `\*not italic\*`                          | *not italic* (as text)                |
+| `\`                         | Escape special character    | `\*not italic\*`                          | \*not italic\*                         |
 
 <br>
 
